@@ -1,0 +1,84 @@
+body {
+  color: #fff;
+  background: url(back_o7.png) #fbf4ff;
+}
+
+.title{
+  background: #7100a9;
+}
+
+.href{
+  background: #f4f9ff;
+  color: #7100a9;
+}
+
+.text_block{
+  background: #f4f9ff;
+  color: #7100a9;
+}
+
+.top{
+  background: #f4f9ff;
+}
+
+
+.list {
+	color: #7100a9;
+}
+
+
+.top span {
+	color: #7100a9;
+}
+
+.ads_link {
+  background:#c95eff;
+  color:white;
+}
+
+.ads_block {
+  background: #c95eff;
+  color:white;
+}
+
+.link {
+  background: #7100a9;
+  border-right: 1px solid #fff;
+  border-left: 1px solid #fff;
+}
+
+.nick-container .nick{
+  background:#c95eff;
+  color:white;
+}  
+
+.nick-container:after {
+    color: #fff; 
+}
+
+.nick-container .nick input{
+	color:white;
+}
+
+.score-container, .best-container{
+  background: #c95eff;
+  color: white;
+}
+
+.score-container:after, .best-container:after {
+    color: #fff 
+}
+
+.cancel-button, .restart-button, .color-button {
+  background: #c95eff;
+  color: #FFF;
+}
+
+
+.game-container {
+	background: rgba(162, 0, 255, .25); 
+}
+
+.grid-cell {
+	background: rgba(255, 255, 255, .5);
+}

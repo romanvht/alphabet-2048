@@ -1,0 +1,81 @@
+body {
+  color: #fff;
+  background: url(back_o7.png) #000000;
+}
+
+.title{
+  background: #DAA520;
+}
+
+.href{
+  background: #000;
+  color: #fff;
+}
+
+.text_block{
+  background: #000;
+  color: #fff;
+}
+
+.ads_link {
+  background:#bbada0;
+  color:white;
+}
+
+.ads_block {
+  background: #bbada0;
+  color:white;
+}
+
+.top{
+  background: #000;
+}
+
+.top span {
+	color: orange;
+}
+
+.link {
+  background: #DAA520;
+  border-right: 1px solid #000;
+  border-left: 1px solid #000;
+}
+
+.list {
+	color: #fff;
+}
+
+.nick-container .nick{
+  background:#bbada0;
+  color:white;
+}  
+
+.nick-container:after {
+    color: #eee4da; 
+}
+
+.nick-container .nick input{
+	color:white;
+}
+
+.score-container, .best-container{
+  background: #bbada0;
+  color: white;
+}
+
+.score-container:after, .best-container:after {
+    color: #eee4da; 
+}
+
+.cancel-button, .restart-button, .color-button {
+  background: #bbada0;
+  color: #FFF;
+}
+
+.game-container {
+	background: #000;
+}
+
+.grid-cell {
+  background: rgba(238, 228, 218, 0.35); 
+}

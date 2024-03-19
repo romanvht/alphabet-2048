@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="description"
+    content="Перемещайте буквы по полю. Когда две одинаковые буквы вместе, они сливаются в новую плитку со следующей буквой! Бейте рекорды игроков и соревнуйтесь с друзьями :)">
+  <title>Головоломка Алфавит</title>
+  <link href="css/style.css?v1.0.3" rel="stylesheet" type="text/css">
+  <link href="css/block-color.css?v1.0.3" rel="stylesheet" type="text/css">
+  <link id="style" href="css/black.css?v1.0.3" rel="stylesheet" type="text/css">
+  <link id="size" href="css/4.css?v1.0.3" rel="stylesheet" type="text/css">
+  <link rel="apple-touch-icon" sizes="57x57" href="images/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="images/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="images/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="images/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="images/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="images/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="images/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="images/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="images/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/images/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="images/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+  <link rel="shortcut icon" href="ico/favicon.ico" />
+  <meta name="msapplication-TileColor" content="#000000">
+  <meta name="msapplication-TileImage" content="images/ms-icon-144x144.png">
+  <meta id="theme-meta" name="theme-color" content="#000000">
+  <script src="https://yandex.ru/games/sdk/v2"></script>
+  <script>
+    let version = 'v1.0.3';
+    let domain = document.domain;
+
+    window.onload = function () {
+      var preloader = document.getElementById('p_prldr');
+      preloader.classList.add('fadeout');
+      setTimeout(function () {
+        preloader.parentNode.removeChild(preloader);
+      }, 200);
+    };
+  </script>
+</head>
+
+<body id="game-body">
+  <div id="p_prldr"><span class="svg_anm"></span></div>
+  <div class="resize-game">
+    <span>Недостаточно места для комфортной игры.<br />Пожалуйста, увеличьте размер окна.</span>
+  </div>
+
+  <div class="main_links">
+    <a id="link4" class="link anim" href="?size=4">4x4</a>
+    <a id="link5" class="link anim" href="?size=5">5x5</a>
+    <a id="link6" class="link anim" href="?size=6">6x6</a>
+    <a id="link7" class="link anim" href="?size=7">7x7</a>
+    <a id="linkTop" class="link anim" href="#"><svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+        <g id="Rating_Podium" data-name="Rating Podium">
+          <path d="m0 58h64v6h-64z" fill="#000000" style="fill: rgb(255, 255, 255);"></path>
+          <path d="m47 20a1 1 0 0 0 -1 1v35h14v-35a1 1 0 0 0 -1-1z" fill="#000000" style="fill: rgb(255, 255, 255);">
+          </path>
+          <path
+            d="m47.912 11.094-.858 5.006a1 1 0 0 0 1.451 1.054l4.495-2.363 4.5 2.364a1 1 0 0 0 1.054-.076 1 1 0 0 0 .4-.978l-.858-5.007 3.638-3.545a1 1 0 0 0 -.555-1.706l-5.026-.731-2.253-4.554a1.04 1.04 0 0 0 -1.792 0l-2.253 4.554-5.026.731a1 1 0 0 0 -.555 1.706z"
+            fill="#000000" style="fill: rgb(255, 255, 255);"></path>
+          <path d="m26 31a1 1 0 0 0 -1 1v24h14v-24a1 1 0 0 0 -1-1z" fill="#000000" style="fill: rgb(255, 255, 255);">
+          </path>
+          <path
+            d="m26.912 22.094-.858 5.006a1 1 0 0 0 1.451 1.054l4.495-2.363 4.495 2.364a1 1 0 0 0 1.054-.076 1 1 0 0 0 .4-.978l-.858-5.007 3.638-3.545a1 1 0 0 0 -.555-1.706l-5.026-.731-2.248-4.554a1.04 1.04 0 0 0 -1.792 0l-2.249 4.554-5.026.731a1 1 0 0 0 -.555 1.706z"
+            fill="#000000" style="fill: rgb(255, 255, 255);"></path>
+          <path d="m5 41a1 1 0 0 0 -1 1v14h14v-14a1 1 0 0 0 -1-1z" fill="#000000" style="fill: rgb(255, 255, 255);">
+          </path>
+          <path
+            d="m5.912 32.094-.858 5.006a1 1 0 0 0 1.451 1.054l4.495-2.363 4.5 2.364a1 1 0 0 0 1.054-.076 1 1 0 0 0 .4-.978l-.858-5.007 3.638-3.545a1 1 0 0 0 -.555-1.706l-5.026-.731-2.253-4.554a1.04 1.04 0 0 0 -1.792 0l-2.253 4.554-5.026.731a1 1 0 0 0 -.555 1.706z"
+            fill="#000000" style="fill: rgb(255, 255, 255);"></path>
+        </g>
+      </svg></a>
+  </div>
+
+  <div class="heading">
+    <div class="nick-container">
+      <div class="hiddenInput"></div>
+      <div class="nick"><input id="nick" type="text"></div>
+    </div>
+    <div class="scores-container">
+      <div class="score-container">0</div>
+      <div class="best-container">0</div>
+    </div>
+  </div>
+
+  <div id="top-container" style="display: none;">
+    <div class="title"><span class="tit">Топ 10</span></div>
+    <div class="top">
+      <div class="list">Загрузка результатов</div>
+    </div>
+  </div>
+
+  <div class="game-table">
+    <div class="game-container">
+      <div class="game-message">
+        <p></p>
+        <div class="lower">
+          <a class="retry-button">Еще</a>
+          <div class="advert-container"></div>
+        </div>
+      </div>
+
+      <div class="game-body">
+        <div id="game-table" class="grid-container">
+          <div class="grid-row">
+            <div class="grid-cell"></div>
+            <div class="grid-cell"></div>
+            <div class="grid-cell"></div>
+            <div class="grid-cell"></div>
+          </div>
+          <div class="grid-row">
+            <div class="grid-cell"></div>
+            <div class="grid-cell"></div>
+            <div class="grid-cell"></div>
+            <div class="grid-cell"></div>
+          </div>
+          <div class="grid-row">
+            <div class="grid-cell"></div>
+            <div class="grid-cell"></div>
+            <div class="grid-cell"></div>
+            <div class="grid-cell"></div>
+          </div>
+          <div class="grid-row">
+            <div class="grid-cell"></div>
+            <div class="grid-cell"></div>
+            <div class="grid-cell"></div>
+            <div class="grid-cell"></div>
+          </div>
+        </div>
+
+        <div class="tile-container">
+          <div class="tile tile-2 tile-position-1-1 tile-new">
+            <div class="tile-inner">L</div>
+          </div>
+          <div class="tile tile-4 tile-position-2-1 tile-new">
+            <div class="tile-inner">O</div>
+          </div>
+          <div class="tile tile-6 tile-position-3-1 tile-new">
+            <div class="tile-inner">A</div>
+          </div>
+          <div class="tile tile-8 tile-position-4-1 tile-new">
+            <div class="tile-inner">D</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="control-panel">
+    <div class="control">
+      <div class="restart-button"><span>&#8634;</span> Заного</div>
+      <div class="color-button"><span id="color" class="color"></span> Цвета</div>
+      <div class="cancel-button"><span>&#8630;</span> Отмена</div>
+    </div>
+  </div>
+
+  <script src="js/local_storage_manager.js?v1.0.3"></script>
+  <script src="js/animframe_polyfill.js?v1.0.3"></script>
+  <script src="js/keyboard_input_manager.js?v1.0.3"></script>
+  <script src="js/html_actuator_ru.js?v1.0.3"></script>
+  <script src="js/grid.js?v1.0.3"></script>
+  <script src="js/tile.js?v1.0.3"></script>
+  <script src="js/game_manager.js?v1.0.3"></script>
+  <script src="js/game_start.js?v1.0.3"></script>
+  <script>
+    var storage = new LocalStorageManager;
+
+    startGame(storage);
+
+    if (domain.indexOf("yandex") !== -1) {
+      YaGames.init().then(ysdk => {
+        ysdk.getPlayer().then(_player => {
+          var player = _player.getName();
+
+          if (player) {
+            setNick(player, true);
+            console.log('Get yandex nickname: ' + player);
+          }
+        });
+
+        ysdk.features.LoadingAPI?.ready();
+      });
+    }
+  </script>
+</body>
+
+</html>

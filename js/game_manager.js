@@ -113,6 +113,7 @@ GameManager.prototype.actuate = function () {
   }
 
   this.actuator.actuate(this.grid, {
+    nick: this.storageManager.getNick(),
     score: this.score,
     size: this.size,
     over: this.over,

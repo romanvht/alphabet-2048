@@ -27,10 +27,10 @@ HTMLActuator.prototype.actuate = function (grid, metadata) {
 
     if (metadata.terminated) {
       if (metadata.over) {
-        post_get("https://api-alphabet.romanvht.ru/post.php?name="+storage.getNick()+"&size="+metadata.size+"&score="+metadata.score+"&win=0", true);
+        post_get("https://api-alphabet.romanvht.ru/post.php?name="+metadata.nick+"&size="+metadata.size+"&score="+metadata.score+"&win=0", true);
         self.message(false);
       } else if (metadata.won) {
-        post_get("https://api-alphabet.romanvht.ru/post.php?name="+storage.getNick()+"&size="+metadata.size+"&score="+metadata.score+"&win=1", true);
+        post_get("https://api-alphabet.romanvht.ru/post.php?name="+metadata.nick+"&size="+metadata.size+"&score="+metadata.score+"&win=1", true);
         self.message(true);
       }
     }

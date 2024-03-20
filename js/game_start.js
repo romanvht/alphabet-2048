@@ -1,5 +1,3 @@
-var storage = new LocalStorageManager;
-
 /**** Events ****/
 document.getElementById('linkTop').onclick = function () {
   let topBlock = document.getElementById('top-container');
@@ -19,6 +17,7 @@ document.getElementById('linkTop').onclick = function () {
 };
 
 document.getElementById('nick').oninput = function () {
+  var storage = new LocalStorageManager;
   var hiddenInput = document.querySelector(".hiddenInput");
   hiddenInput.textContent = this.value;
 
@@ -39,6 +38,7 @@ window.addEventListener('resize', (e) => {
 /**** /Events ****/
 
 function startGame() {
+  var storage = new LocalStorageManager;
   var size = storage.getSize();
 
   document.getElementById("size").setAttribute("href", "css/" + size + ".css?" + version);
@@ -75,6 +75,7 @@ function startGame() {
 }
 
 function setNick(nick, disable) {
+  var storage = new LocalStorageManager;
   storage.setNick(nick);
 
   var hiddenInput = document.querySelector(".hiddenInput");
@@ -145,6 +146,7 @@ function get(key) {
 }
 
 function setColor(str) {
+  var storage = new LocalStorageManager;
   storage.setStyle(str);
   document.getElementById("style").setAttribute("href", "css/" + str + ".css?" + version);
 }

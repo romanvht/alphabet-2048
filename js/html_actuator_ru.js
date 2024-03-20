@@ -27,15 +27,32 @@ HTMLActuator.prototype.actuate = function (grid, metadata) {
 
     if (metadata.terminated) {
       if (metadata.over) {
-        post_get("https://api-alphabet.romanvht.ru/post.php?name="+metadata.nick+"&size="+metadata.size+"&score="+metadata.score+"&win=0", true);
+        self.postLeaderboard("https://api-alphabet.romanvht.ru/post.php?name="+metadata.nick+"&size="+metadata.size+"&score="+metadata.score+"&win=0", true);
         self.message(false);
       } else if (metadata.won) {
-        post_get("https://api-alphabet.romanvht.ru/post.php?name="+metadata.nick+"&size="+metadata.size+"&score="+metadata.score+"&win=1", true);
+        self.postLeaderboard("https://api-alphabet.romanvht.ru/post.php?name="+metadata.nick+"&size="+metadata.size+"&score="+metadata.score+"&win=1", true);
         self.message(true);
       }
     }
   });
 };
+
+HTMLActuator.prototype.postLeaderboard = function (url, sync) {
+  var ajax = new XMLHttpRequest();
+  ajax.open('GET', url, sync);
+  ajax.onreadystatechange = function () {
+    if (ajax.readyState == 4) {
+      if (ajax.status == 200) {
+        console.log('Успешное выполнение GET запроса: ' + url);
+      } else {
+        console.log('Ошибка отправки запроса GET: ' + url + '(' + ajax.status + ': ' + ajax.statusText + ')');
+      }
+    } else {
+      console.log('Отправка запроса GET: ' + url);
+    }
+  }
+  ajax.send(null);
+}
 
 HTMLActuator.prototype.continue = function () {
   if (typeof ga !== "undefined") {

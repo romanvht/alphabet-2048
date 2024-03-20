@@ -1,13 +1,14 @@
 /**** Events ****/
 document.getElementById('linkTop').onclick = function () {
-  let topBlock = document.getElementById('top-container');
-  let gameBlock = document.querySelector('.game-table');
+  var storage = new LocalStorageManager;
+  var topBlock = document.getElementById('top-container');
+  var gameBlock = document.querySelector('.game-table');
   if (topBlock.style.display == "none") {
     topBlock.style.display = "block";
     gameBlock.style.visibility = "hidden";
     this.classList.add('selected');
     this.innerHTML = 'X';
-    load_get('https://api-alphabet.romanvht.ru/top.php?cell=' + storage.getSize(), 'top-container', true);
+    loadLeaderboard('https://api-alphabet.romanvht.ru/top.php?cell=' + storage.getSize(), 'top-container', true);
   } else {
     topBlock.style.display = "none";
     gameBlock.style.visibility = "visible";
@@ -102,24 +103,7 @@ function resizeWindow() {
   widthBody.style.height = `${window.innerHeight}px`;
 }
 
-function post_get(url, sync) {
-  var ajax = new XMLHttpRequest();
-  ajax.open('GET', url, sync);
-  ajax.onreadystatechange = function () {
-    if (ajax.readyState == 4) {
-      if (ajax.status == 200) {
-        console.log('Успешное выполнение GET запроса: ' + url);
-      } else {
-        console.log('Ошибка отправки запроса GET: ' + url + '(' + ajax.status + ': ' + ajax.statusText + ')');
-      }
-    } else {
-      console.log('Отправка запроса GET: ' + url);
-    }
-  }
-  ajax.send(null);
-}
-
-function load_get(url, IDel, sync) {
+function loadLeaderboard(url, IDel, sync) {
   var ajax = new XMLHttpRequest();
   ajax.open('GET', url, sync);
   ajax.onreadystatechange = function () {

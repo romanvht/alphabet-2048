@@ -1,6 +1,6 @@
 @font-face {
   font-family: 'Oswald';
-  src: url(Oswald.woff2), url(Oswald.woff);
+  src: url('font/Oswald.woff2'), url('font/Oswald.woff');
 }
 
 html, body, div, span, applet, object, iframe,
@@ -45,6 +45,77 @@ body {
   max-width: 800px;
   position: relative;
   overflow: hidden;
+}
+
+
+#p_prldr {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 30;
+  opacity: 1;
+}
+
+#p_prldr svg {
+  position: fixed;
+  left: calc(50% - 50px);
+  top: calc(50% - 50px);
+  animation: rotate .5s linear infinite;
+  width: 100px;
+  height: 100px;
+}
+
+@keyframes rotate {
+  50% {
+    transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: .5;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: .5;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.fadein {
+  -webkit-animation: fadeIn 200ms ease;
+  animation: fadeIn 200ms ease;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+.fadeout {
+  -webkit-animation: fadeOut 200ms ease;
+  animation: fadeOut 200ms ease;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
 }
 
 .title {
@@ -335,71 +406,6 @@ img {
 .nav_sel {
   color: rgb(118, 82, 28);
   opacity: 0.5;
-}
-
-#p_prldr {
-  position: fixed;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 30;
-  opacity: 1;
-}
-
-#p_prldr .svg_anm {
-  position: fixed;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  background: url(oval.svg) center center no-repeat;
-  background-size: 101px;
-  margin: 0px;
-  opacity: 1;
-}
-
-
-@keyframes fadeOut {
-  0% {
-    opacity: 1;
-  }
-
-  50% {
-    opacity: .5;
-  }
-
-  100% {
-    opacity: 0;
-  }
-}
-
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-  }
-
-  50% {
-    opacity: .5;
-  }
-
-  100% {
-    opacity: 1;
-  }
-}
-
-.fadein {
-  -webkit-animation: fadeIn 200ms ease;
-  animation: fadeIn 200ms ease;
-  -webkit-animation-fill-mode: both;
-  animation-fill-mode: both;
-}
-
-.fadeout {
-  -webkit-animation: fadeOut 200ms ease;
-  animation: fadeOut 200ms ease;
-  -webkit-animation-fill-mode: both;
-  animation-fill-mode: both;
 }
 
 .heading {
@@ -711,28 +717,49 @@ input[type=checkbox]:checked~.menu {
   box-sizing: border-box;
 }
 
-.control span {
-  font-size: 16px;
-}
-
 .color-button {
   position: relative;
-  padding-left: 35px;
-  text-align: left;
 }
 
-.color-button .color {
+.color-links {
   position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 15px;
-  display: inline-block;
-  width: 16px;
-  height: 16px;
-  line-height: 16px;
+  z-index: 999;
+  width: 100%;
+  bottom: 40px;
+}
+
+.color-links.hidden {
+  display: none;
+}
+
+.color-links a{
+  display: block;
+  margin-bottom: 2px;
   border-radius: 3px;
+}
+
+.color-links a.black{
+  background: #000;
+  color: #fff;
+} 
+
+.color-links a.green{
+  background: green;
+  color: #fff;
+} 
+
+.color-links a.purple{
+  background: purple;
+  color: #fff;
+} 
+
+.color-links a.blue{
   background: #0083ff;
-  margin: auto;
+  color: #fff;
+}
+
+.control span {
+  font-size: 16px;
 }
 
 .cancel-button {

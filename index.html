@@ -2,36 +2,33 @@
 <html>
 
 <head>
-  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <meta name="description"
     content="Перемещайте буквы по полю. Когда две одинаковые буквы вместе, они сливаются в новую плитку со следующей буквой! Бейте рекорды игроков и соревнуйтесь с друзьями :)">
   <title>Головоломка Алфавит</title>
+  <link rel="icon" href="images/favicon.ico">
+
+  <link rel="preload" href="css/font/Oswald.woff" as="font" type="font/woff" crossorigin>
+  <link rel="preload" href="css/font/Oswald.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="css/black.css?v1.0.3" as="style">
+  <link rel="preload" href="css/blue.css?v1.0.3" as="style">
+  <link rel="preload" href="css/green.css?v1.0.3" as="style">
+  <link rel="preload" href="css/purple.css?v1.0.3" as="style">
+
   <link href="css/style.css?v1.0.3" rel="stylesheet" type="text/css">
   <link href="css/block-color.css?v1.0.3" rel="stylesheet" type="text/css">
-  <link id="style" href="css/black.css?v1.0.3" rel="stylesheet" type="text/css">
   <link id="size" href="css/4.css?v1.0.3" rel="stylesheet" type="text/css">
-  <link rel="apple-touch-icon" sizes="57x57" href="images/apple-icon-57x57.png">
-  <link rel="apple-touch-icon" sizes="60x60" href="images/apple-icon-60x60.png">
-  <link rel="apple-touch-icon" sizes="72x72" href="images/apple-icon-72x72.png">
-  <link rel="apple-touch-icon" sizes="76x76" href="images/apple-icon-76x76.png">
-  <link rel="apple-touch-icon" sizes="114x114" href="images/apple-icon-114x114.png">
-  <link rel="apple-touch-icon" sizes="120x120" href="images/apple-icon-120x120.png">
-  <link rel="apple-touch-icon" sizes="144x144" href="images/apple-icon-144x144.png">
-  <link rel="apple-touch-icon" sizes="152x152" href="images/apple-icon-152x152.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="images/apple-icon-180x180.png">
-  <link rel="icon" type="image/png" sizes="192x192" href="/images/android-icon-192x192.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="96x96" href="images/favicon-96x96.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
-  <link rel="shortcut icon" href="ico/favicon.ico" />
-  <meta name="msapplication-TileColor" content="#000000">
-  <meta name="msapplication-TileImage" content="images/ms-icon-144x144.png">
-  <meta id="theme-meta" name="theme-color" content="#000000">
+  <link id="style" href="css/black.css?v1.0.3" rel="stylesheet" type="text/css">
   <script src="https://yandex.ru/games/sdk/v2"></script>
   <script>
     let version = 'v1.0.3';
     let domain = document.domain;
+
+    let storageStyle = window.localStorage.getItem('style');
+    if(storageStyle){
+      document.getElementById("style").setAttribute("href", "css/" + storageStyle + ".css?" + version);
+    }
 
     window.onload = function () {
       var preloader = document.getElementById('p_prldr');
@@ -44,7 +41,16 @@
 </head>
 
 <body id="game-body">
-  <div id="p_prldr"><span class="svg_anm"></span></div>
+  <div id="p_prldr">
+    <svg width="38" height="38" viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg" stroke="#fff">
+      <g fill="none" fill-rule="evenodd">
+          <g transform="translate(1 1)" stroke-width="2">
+              <circle stroke-opacity=".5" cx="18" cy="18" r="18"/>
+              <path d="M36 18c0-9.94-8.06-18-18-18"/>
+          </g>
+      </g>
+    </svg>
+  </div>
   <div class="resize-game">
     <span>Недостаточно места для комфортной игры.<br />Пожалуйста, увеличьте размер окна.</span>
   </div>
@@ -152,9 +158,21 @@
 
   <div class="control-panel">
     <div class="control">
-      <div class="restart-button"><span>&#8634;</span> Заного</div>
-      <div class="color-button"><span id="color" class="color"></span> Цвета</div>
-      <div class="cancel-button"><span>&#8630;</span> Отмена</div>
+      <div class="restart-button">
+        <span>&#8634;</span> Заного
+      </div>
+      <div class="color-button" onclick="this.children[0].classList.toggle('hidden')">
+        Цвета
+        <div class="color-links hidden">
+          <a class="black" href="#" onclick="setColor('black')">Черный</a>
+          <a class="blue" href="#" onclick="setColor('blue')">Синий</a>
+          <a class="green" href="#" onclick="setColor('green')">Зеленый</a>
+          <a class="purple" href="#" onclick="setColor('purple')">Фиолетовый</a>
+        </div>
+      </div>
+      <div class="cancel-button">
+        <span>&#8630;</span> Отмена
+      </div>
     </div>
   </div>
 
@@ -167,9 +185,7 @@
   <script src="js/game_manager.js?v1.0.3"></script>
   <script src="js/game_start.js?v1.0.3"></script>
   <script>
-    var storage = new LocalStorageManager;
-
-    startGame(storage);
+    startGame();
 
     if (domain.indexOf("yandex") !== -1) {
       YaGames.init().then(ysdk => {

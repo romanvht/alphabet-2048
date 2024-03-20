@@ -1,3 +1,5 @@
+var storage = new LocalStorageManager;
+
 /**** Events ****/
 document.getElementById('linkTop').onclick = function () {
   let topBlock = document.getElementById('top-container');
@@ -31,13 +33,6 @@ document.getElementById('nick').oninput = function () {
   storage.setNick(this.value);
 }
 
-document.querySelector('.color-button').onclick = function () {
-  var style = storage.getStyle();
-  var color = setColor(style);
-  storage.setStyle(color);
-  document.getElementById("style").setAttribute("href", "css/" + color + ".css?" + version);
-};
-
 window.addEventListener('resize', (e) => {
   resizeWindow();
 });
@@ -45,9 +40,7 @@ window.addEventListener('resize', (e) => {
 
 function startGame() {
   var size = storage.getSize();
-  var style = storage.getStyle();
 
-  document.getElementById("style").setAttribute("href", "css/" + style + ".css?" + version);
   document.getElementById("size").setAttribute("href", "css/" + size + ".css?" + version);
 
   setNick(storage.getNick());
@@ -152,40 +145,6 @@ function get(key) {
 }
 
 function setColor(str) {
-  switch (str) {
-    default:
-      var color = 'black';
-      document.getElementById("color").setAttribute("style", "background: #000000;"); /* Next color */
-      document.getElementById("theme-meta").setAttribute("content", "#000000");
-      return color;
-      break;
-
-    case "black":
-      var color = 'blue';
-      document.getElementById("theme-meta").setAttribute("content", "#0083ff");
-      document.getElementById("color").setAttribute("style", "background: green;"); /* Next color */
-      return color;
-      break;
-
-    case "blue":
-      var color = 'green';
-      document.getElementById("theme-meta").setAttribute("content", "green");
-      document.getElementById("color").setAttribute("style", "background: purple;"); /* Next color */
-      return color;
-      break;
-
-    case "green":
-      var color = 'purple';
-      document.getElementById("theme-meta").setAttribute("content", "purple");
-      document.getElementById("color").setAttribute("style", "background: black;"); /* Next color */
-      return color;
-      break;
-
-    case "purple":
-      var color = 'black';
-      document.getElementById("theme-meta").setAttribute("content", "#111111");
-      document.getElementById("color").setAttribute("style", "background: #0083ff;"); /* Next color */
-      return color;
-      break;
-  }
+  storage.setStyle(str);
+  document.getElementById("style").setAttribute("href", "css/" + str + ".css?" + version);
 }

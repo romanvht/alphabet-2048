@@ -33,6 +33,7 @@ HTMLActuator.prototype.setup = function (storage, metadata) {
     self.gridContainer.append(rowDiv);
   }
 
+  /**** Ya.Games *****/
   if (domain.indexOf("yandex") !== -1) {
     YaGames.init().then(ysdk => {
       ysdk.getPlayer().then(_player => {
@@ -49,6 +50,7 @@ HTMLActuator.prototype.setup = function (storage, metadata) {
       ysdk.features.LoadingAPI?.ready();
     });
   }
+  /**** /Ya.Games *****/
 
   console.log('Game Ready');
 };

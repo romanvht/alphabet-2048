@@ -32,76 +32,7 @@ document.getElementById('nick').oninput = function () {
 
   storage.setNick(this.value);
 }
-
-window.addEventListener('resize', (e) => {
-  resizeWindow();
-});
 /**** /Events ****/
-
-function startGame() {
-  var storage = new LocalStorageManager;
-  var size = storage.getSize();
-
-  document.getElementById("size").setAttribute("href", "css/" + size + ".css?" + version);
-
-  setNick(storage.getNick());
-
-  switch (size) {
-    case 4:
-      document.getElementById("game-table").innerHTML = '<div class="grid-row"><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div></div><div class="grid-row"><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div></div><div class="grid-row"><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div></div><div class="grid-row"><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div></div>';
-      document.getElementById("link4").classList.add("selected");
-      break;
-
-    case 5:
-      document.getElementById("game-table").innerHTML = '<div class="grid-row"><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div></div><div class="grid-row"><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div></div><div class="grid-row"><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div></div><div class="grid-row"><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div></div><div class="grid-row"><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div></div>';
-      document.getElementById("link5").classList.add("selected");
-      break;
-
-    case 6:
-      document.getElementById("game-table").innerHTML = '<div class="grid-row"><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div></div><div class="grid-row"><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div></div><div class="grid-row"><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div></div><div class="grid-row"><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div></div><div class="grid-row"><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div></div><div class="grid-row"><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div></div>';
-      document.getElementById("link6").classList.add("selected");
-      break;
-
-    case 7:
-      document.getElementById("game-table").innerHTML = '<div class="grid-row"><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div></div><div class="grid-row"><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div></div><div class="grid-row"><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div></div><div class="grid-row"><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div></div><div class="grid-row"><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div></div><div class="grid-row"><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div></div><div class="grid-row"><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div></div>';
-      document.getElementById("link7").classList.add("selected");
-      break;
-  }
-
-  window.requestAnimationFrame(function () {
-    new GameManager(size, KeyboardInputManager, HTMLActuator, LocalStorageManager);
-  });
-
-  resizeWindow();
-}
-
-function setNick(nick, disable) {
-  var storage = new LocalStorageManager;
-  storage.setNick(nick);
-
-  var hiddenInput = document.querySelector(".hiddenInput");
-  hiddenInput.textContent = nick;
-
-  var nickContainer = document.getElementById("nick");
-  nickContainer.setAttribute("value", nick);
-
-  if (hiddenInput.clientWidth < 50) {
-    nickContainer.style.width = 50 + "px";
-  } else if (hiddenInput.clientWidth > 200) {
-    nickContainer.style.width = 200 + "px";
-  } else {
-    nickContainer.style.width = hiddenInput.clientWidth + "px";
-  }
-
-  if (disable) {
-    nickContainer.setAttribute("disabled", true);
-  }
-}
-
-function resizeWindow() {
-  const widthBody = document.getElementById("game-body");
-  widthBody.style.height = `${window.innerHeight}px`;
-}
 
 function loadLeaderboard(url, IDel, sync) {
   var ajax = new XMLHttpRequest();
@@ -121,12 +52,6 @@ function loadLeaderboard(url, IDel, sync) {
     }
   }
   ajax.send(null);
-}
-
-function get(key) {
-  var s = window.location.search;
-  s = s.match(new RegExp(key + '=([^&=]+)'));
-  return s ? s[1] : false;
 }
 
 function setColor(str) {

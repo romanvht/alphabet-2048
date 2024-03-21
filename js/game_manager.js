@@ -1,7 +1,7 @@
-function GameManager(Size, InputManager, Actuator, StorageManager) {
-  this.size = Size;
+function GameManager(InputManager, Actuator, StorageManager) {
   this.inputManager = new InputManager;
   this.storageManager = new StorageManager();
+  this.size = this.storageManager.getSize();
   this.actuator = new Actuator;
 
   this.startTiles = 2;
@@ -20,7 +20,7 @@ GameManager.prototype.restart = function () {
   this.setup();
 
   /**** YaGames ADS ****/
-  if(domain.indexOf("yandex") !== -1){
+  if (domain.indexOf("yandex") !== -1) {
     YaGames.init().then(ysdk => ysdk.adv.showFullscreenAdv());
   }
 };
@@ -58,6 +58,11 @@ GameManager.prototype.setup = function () {
 
     this.addStartTiles();
   }
+
+  this.actuator.setup({
+    nick: this.storageManager.getNick(),
+    size: this.size
+  });
 
   this.actuate();
 };
@@ -197,7 +202,7 @@ GameManager.prototype.move = function (direction) {
 
   if (moved) {
     this.addRandomTile();
-	if(this.size > 5)this.addRandomTile();
+    if (this.size > 5) this.addRandomTile();
 
     if (!this.movesAvailable()) {
       this.over = true;

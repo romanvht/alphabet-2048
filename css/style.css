@@ -3,19 +3,84 @@
   src: url('font/Oswald.woff2'), url('font/Oswald.woff');
 }
 
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, code,
-del, dfn, img, ins, kbd, q, s, samp,
-small, strike, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed,
-figure, figcaption, footer, header, hgroup,
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+code,
+del,
+dfn,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
   margin: 0;
   padding: 0;
   border: 0;
@@ -37,16 +102,20 @@ time, mark, audio, video {
   user-select: none;
 }
 
+html {
+  height: 100%;
+}
+
 body {
   font-family: 'Oswald', sans-serif;
   font-size: 13px;
+  height: 100%;
   margin: auto;
   padding: 0px 5px;
   max-width: 800px;
   position: relative;
   overflow: hidden;
 }
-
 
 #p_prldr {
   position: fixed;
@@ -71,6 +140,7 @@ body {
   50% {
     transform: rotate(180deg);
   }
+
   100% {
     transform: rotate(360deg);
   }
@@ -138,14 +208,14 @@ body {
   z-index: 999;
 }
 
-#top-container .title{
+#top-container .title {
   position: absolute;
   top: 0px;
   left: 5px;
   right: 5px;
 }
 
-#top-container .top{
+#top-container .top {
   position: absolute;
   overflow: hidden;
   top: 60px;
@@ -216,21 +286,21 @@ a:hover {
   width: calc(25% - 15px);
 }
 
-.link svg{
-	height: 20px;
+.link svg {
+  height: 20px;
 }
 
 img {
   vertical-align: middle;
 }
 
-.link:first-child{
-	border-left: none;
+.link:first-child {
+  border-left: none;
 }
 
-.link:last-child{
-	border-right: none;
-	width: 60px;
+.link:last-child {
+  border-right: none;
+  width: 60px;
 }
 
 .c1 {
@@ -266,15 +336,27 @@ img {
   font-size: 55px;
 }
 
+.game-body {
+  width: 480px;
+  height: 480px;
+  z-index: 100;
+  margin: 0px;
+}
+
 .game-table {
   display: flex;
   justify-content: center;
   align-items: center;
+  visibility: hidden;
   position: absolute;
   top: 140px;
   bottom: 70px;
   left: 0px;
   right: 0px;
+}
+
+.game-table.load {
+  visibility: visible;
 }
 
 .resize-game {
@@ -380,10 +462,6 @@ img {
   .tile .tile-inner {
     font-size: 35px;
   }
-}
-
-.game-body {
-  z-index: 100;
 }
 
 .nav_next,
@@ -732,28 +810,28 @@ input[type=checkbox]:checked~.menu {
   display: none;
 }
 
-.color-links a{
+.color-links a {
   display: block;
   margin-bottom: 2px;
   border-radius: 3px;
 }
 
-.color-links a.black{
+.color-links a.black {
   background: #000;
   color: #fff;
-} 
+}
 
-.color-links a.green{
+.color-links a.green {
   background: green;
   color: #fff;
-} 
+}
 
-.color-links a.purple{
+.color-links a.purple {
   background: purple;
   color: #fff;
-} 
+}
 
-.color-links a.blue{
+.color-links a.blue {
   background: #0083ff;
   color: #fff;
 }

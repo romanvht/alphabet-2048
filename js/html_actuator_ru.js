@@ -1,12 +1,36 @@
 function HTMLActuator() {
+  this.gridContainer = document.querySelector(".grid-container");
   this.tileContainer = document.querySelector(".tile-container");
   this.scoreContainer = document.querySelector(".score-container");
   this.bestContainer = document.querySelector(".best-container");
+  this.nickContainer = document.querySelector(".nick-container");
   this.messageContainer = document.querySelector(".game-message");
   this.advertContainer = document.querySelector(".advert-container");
 
+  this.sizeStyle = document.getElementById("size");
+
   this.score = 0;
 }
+
+HTMLActuator.prototype.setup = function (metadata) {
+  this.sizeStyle.setAttribute("href", "css/" + metadata.size + ".css?");
+  this.updateNick(metadata.nick);
+
+  document.getElementById("link" + metadata.size).classList.add("selected");
+
+  for (let row = 1; row <= metadata.size; row++) {
+    var rowDiv = document.createElement('div');
+    rowDiv.classList.add('grid-row');
+
+    for (let cell = 1; cell <= metadata.size; cell++) {
+      var cellDiv = document.createElement('div');
+      cellDiv.classList.add('grid-cell');
+      rowDiv.append(cellDiv);
+    }
+
+    this.gridContainer.append(rowDiv);
+  }
+};
 
 HTMLActuator.prototype.actuate = function (grid, metadata) {
   var self = this;
@@ -27,10 +51,10 @@ HTMLActuator.prototype.actuate = function (grid, metadata) {
 
     if (metadata.terminated) {
       if (metadata.over) {
-        self.postLeaderboard("https://api-alphabet.romanvht.ru/post.php?name="+metadata.nick+"&size="+metadata.size+"&score="+metadata.score+"&win=0", true);
+        self.postLeaderboard("https://api-alphabet.romanvht.ru/post.php?name=" + metadata.nick + "&size=" + metadata.size + "&score=" + metadata.score + "&win=0", true);
         self.message(false);
       } else if (metadata.won) {
-        self.postLeaderboard("https://api-alphabet.romanvht.ru/post.php?name="+metadata.nick+"&size="+metadata.size+"&score="+metadata.score+"&win=1", true);
+        self.postLeaderboard("https://api-alphabet.romanvht.ru/post.php?name=" + metadata.nick + "&size=" + metadata.size + "&score=" + metadata.score + "&win=1", true);
         self.message(true);
       }
     }
@@ -79,8 +103,6 @@ HTMLActuator.prototype.addTile = function (tile) {
   var classes = ["tile", "tile-" + tile.value, positionClass];
 
   if (tile.value > 56) classes.push("tile-super");
-
-
 
   this.applyClasses(wrapper, classes);
   var outputtext = new Array();
@@ -153,6 +175,26 @@ HTMLActuator.prototype.positionClass = function (position) {
   position = this.normalizePosition(position);
   return "tile-position-" + position.x + "-" + position.y;
 };
+
+HTMLActuator.prototype.updateNick = function (nick, disable) {
+  var hiddenInput = document.querySelector(".hiddenInput");
+  hiddenInput.textContent = nick;
+
+  var nickContainer = document.getElementById("nick");
+  nickContainer.setAttribute("value", nick);
+
+  if (hiddenInput.clientWidth < 50) {
+    nickContainer.style.width = 50 + "px";
+  } else if (hiddenInput.clientWidth > 200) {
+    nickContainer.style.width = 200 + "px";
+  } else {
+    nickContainer.style.width = hiddenInput.clientWidth + "px";
+  }
+
+  if (disable) {
+    nickContainer.setAttribute("disabled", true);
+  }
+}
 
 HTMLActuator.prototype.updateScore = function (score) {
   this.clearContainer(this.scoreContainer);

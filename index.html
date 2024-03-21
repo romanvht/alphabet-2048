@@ -18,21 +18,25 @@
 
   <link href="css/style.css?v1.0.3" rel="stylesheet" type="text/css">
   <link href="css/block-color.css?v1.0.3" rel="stylesheet" type="text/css">
-  <link id="size" href="css/4.css?v1.0.3" rel="stylesheet" type="text/css">
   <link id="style" href="css/black.css?v1.0.3" rel="stylesheet" type="text/css">
+  <link id="size" href="#" rel="stylesheet" type="text/css">
   <script src="https://yandex.ru/games/sdk/v2"></script>
   <script>
     let version = 'v1.0.3';
     let domain = document.domain;
 
     let storageStyle = window.localStorage.getItem('style');
-    if(storageStyle){
+    if (storageStyle) {
       document.getElementById("style").setAttribute("href", "css/" + storageStyle + ".css?" + version);
     }
 
     window.onload = function () {
       var preloader = document.getElementById('p_prldr');
       preloader.classList.add('fadeout');
+
+      var gameTable = document.getElementById("game-table");
+      gameTable.classList.add('load');
+
       setTimeout(function () {
         preloader.parentNode.removeChild(preloader);
       }, 200);
@@ -40,14 +44,14 @@
   </script>
 </head>
 
-<body id="game-body">
+<body>
   <div id="p_prldr">
     <svg width="38" height="38" viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg" stroke="#fff">
       <g fill="none" fill-rule="evenodd">
-          <g transform="translate(1 1)" stroke-width="2">
-              <circle stroke-opacity=".5" cx="18" cy="18" r="18"/>
-              <path d="M36 18c0-9.94-8.06-18-18-18"/>
-          </g>
+        <g transform="translate(1 1)" stroke-width="2">
+          <circle stroke-opacity=".5" cx="18" cy="18" r="18" />
+          <path d="M36 18c0-9.94-8.06-18-18-18" />
+        </g>
       </g>
     </svg>
   </div>
@@ -100,7 +104,7 @@
     </div>
   </div>
 
-  <div class="game-table">
+  <div class="game-table" id="game-table">
     <div class="game-container">
       <div class="game-message">
         <p></p>
@@ -111,31 +115,7 @@
       </div>
 
       <div class="game-body">
-        <div id="game-table" class="grid-container">
-          <div class="grid-row">
-            <div class="grid-cell"></div>
-            <div class="grid-cell"></div>
-            <div class="grid-cell"></div>
-            <div class="grid-cell"></div>
-          </div>
-          <div class="grid-row">
-            <div class="grid-cell"></div>
-            <div class="grid-cell"></div>
-            <div class="grid-cell"></div>
-            <div class="grid-cell"></div>
-          </div>
-          <div class="grid-row">
-            <div class="grid-cell"></div>
-            <div class="grid-cell"></div>
-            <div class="grid-cell"></div>
-            <div class="grid-cell"></div>
-          </div>
-          <div class="grid-row">
-            <div class="grid-cell"></div>
-            <div class="grid-cell"></div>
-            <div class="grid-cell"></div>
-            <div class="grid-cell"></div>
-          </div>
+        <div class="grid-container">
         </div>
 
         <div class="tile-container">
@@ -185,7 +165,9 @@
   <script src="js/game_manager.js?v1.0.3"></script>
   <script src="js/game_start.js?v1.0.3"></script>
   <script>
-    startGame();
+    window.requestAnimationFrame(function () {
+      new GameManager(KeyboardInputManager, HTMLActuator, LocalStorageManager);
+    });
 
     if (domain.indexOf("yandex") !== -1) {
       YaGames.init().then(ysdk => {

@@ -12,11 +12,13 @@ function HTMLActuator() {
   this.score = 0;
 }
 
-HTMLActuator.prototype.setup = function (metadata) {
-  this.sizeStyle.setAttribute("href", "css/" + metadata.size + ".css?");
-  this.updateNick(metadata.nick);
+HTMLActuator.prototype.setup = function (storage, metadata) {
+  var self = this;
 
   document.getElementById("link" + metadata.size).classList.add("selected");
+  self.sizeStyle.setAttribute("href", "css/" + metadata.size + ".css?");
+  self.updateNick(metadata.nick);
+  self.gridContainer.innerHTML = '';
 
   for (let row = 1; row <= metadata.size; row++) {
     var rowDiv = document.createElement('div');
@@ -28,8 +30,27 @@ HTMLActuator.prototype.setup = function (metadata) {
       rowDiv.append(cellDiv);
     }
 
-    this.gridContainer.append(rowDiv);
+    self.gridContainer.append(rowDiv);
   }
+
+  if (domain.indexOf("yandex") !== -1) {
+    YaGames.init().then(ysdk => {
+      ysdk.getPlayer().then(_player => {
+        var player = _player.getName();
+
+        if (player) {
+          storage.setNick(player);
+          self.updateNick(player, true);
+
+          console.log('Get yandex nickname: ' + player);
+        }
+      });
+
+      ysdk.features.LoadingAPI?.ready();
+    });
+  }
+
+  console.log('Game Ready');
 };
 
 HTMLActuator.prototype.actuate = function (grid, metadata) {
@@ -191,7 +212,7 @@ HTMLActuator.prototype.updateNick = function (nick, disable) {
     nickContainer.style.width = hiddenInput.clientWidth + "px";
   }
 
-  if (disable) {
+  if(disable){
     nickContainer.setAttribute("disabled", true);
   }
 }

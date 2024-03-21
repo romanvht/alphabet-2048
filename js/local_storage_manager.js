@@ -39,10 +39,18 @@ LocalStorageManager.prototype.setNick = function (str) {
 };
 
 LocalStorageManager.prototype.getNick = function () {
-  var randID = Math.floor(Math.random() * (999999 - 100000 + 1)) + 100000;
-  var randNick = 'Игрок_' + randID;
+  var storageNick = this.storage.getItem(this.nickKey);
 
-  return this.storage.getItem(this.nickKey) || randNick;
+  if(storageNick){
+    return storageNick;
+  }else{
+    var randID = Math.floor(Math.random() * (999999 - 100000 + 1)) + 100000;
+    var randNick = 'Игрок_' + randID;
+
+    this.storage.setItem(this.nickKey, randNick);
+
+    return randNick;
+  }
 };
 
 LocalStorageManager.prototype.setStyle = function (str) {

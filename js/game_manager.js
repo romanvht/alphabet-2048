@@ -10,6 +10,11 @@ function GameManager(InputManager, Actuator, StorageManager) {
   this.inputManager.on("restart", this.restart.bind(this));
   this.inputManager.on("cancel", this.cancel.bind(this));
 
+  this.actuator.setup(this.storageManager, {
+    nick: this.storageManager.getNick(),
+    size: this.size
+  });
+
   this.setup();
 }
 
@@ -58,11 +63,6 @@ GameManager.prototype.setup = function () {
 
     this.addStartTiles();
   }
-
-  this.actuator.setup({
-    nick: this.storageManager.getNick(),
-    size: this.size
-  });
 
   this.actuate();
 };

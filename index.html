@@ -168,21 +168,6 @@
     window.requestAnimationFrame(function () {
       new GameManager(KeyboardInputManager, HTMLActuator, LocalStorageManager);
     });
-
-    if (domain.indexOf("yandex") !== -1) {
-      YaGames.init().then(ysdk => {
-        ysdk.getPlayer().then(_player => {
-          var player = _player.getName();
-
-          if (player) {
-            setNick(player, true);
-            console.log('Get yandex nickname: ' + player);
-          }
-        });
-
-        ysdk.features.LoadingAPI?.ready();
-      });
-    }
   </script>
 </body>
 

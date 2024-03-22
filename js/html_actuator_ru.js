@@ -33,24 +33,53 @@ HTMLActuator.prototype.setup = function (storage, metadata) {
     self.gridContainer.append(rowDiv);
   }
 
-  /**** Ya.Games *****/
-  if (domain.indexOf("yandex") !== -1) {
-    YaGames.init().then(ysdk => {
-      ysdk.getPlayer().then(_player => {
-        var player = _player.getName();
+  /**** Костыль для SDK ****/
+  var domain = document.domain;
+  var s = window.location.search.match(new RegExp('mode=([^&=]+)'));
+  var mode = s ? s[1] : false;
+  var sdk = document.createElement('script');
 
-        if (player) {
-          storage.setNick(player);
-          self.updateNick(player, true);
+  if (domain.indexOf("yandex") !== -1 || storage.getItem('mode') == 'yandex') {
+    sdk.src = 'https://yandex.ru/games/sdk/v2';
+    sdk.onload = function () {
+      YaGames.init().then(ysdk => {
+        ysdk.getPlayer().then(_player => {
+          var player = _player.getName();
 
-          console.log('Get yandex nickname: ' + player);
-        }
+          if (player) {
+            storage.setNick(player);
+            self.updateNick(player, true);
+
+            console.log('Get yandex nickname: ' + player);
+          }
+        });
+
+        ysdk.features.LoadingAPI?.ready();
       });
+    }
 
-      ysdk.features.LoadingAPI?.ready();
-    });
+    storage.setItem('mode', 'yandex');
   }
-  /**** /Ya.Games *****/
+
+  if (mode == 'vk' || storage.getItem('mode') == 'vk') {
+    sdk.src = 'https://unpkg.com/@vkontakte/vk-bridge/dist/browser.min.js';
+    sdk.onload = function () {
+      vkBridge.send("VKWebAppInit", {});
+      vkBridge.send('VKWebAppShowBannerAd', {
+        banner_location: 'bottom'
+      })
+        .then((data) => {
+          if (data.result) console.log('Баннер показан');
+          else console.log('Ошибка при показе баннера');
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+
+    storage.setItem('mode', 'vk');
+  }
+  /**** /Костыль для SDK ****/
 
   console.log('Game Ready');
 };
@@ -214,7 +243,7 @@ HTMLActuator.prototype.updateNick = function (nick, disable) {
     nickContainer.style.width = hiddenInput.clientWidth + "px";
   }
 
-  if(disable){
+  if (disable) {
     nickContainer.setAttribute("disabled", true);
   }
 }

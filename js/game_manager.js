@@ -10,7 +10,7 @@ function GameManager(InputManager, Actuator, StorageManager) {
   this.inputManager.on("restart", this.restart.bind(this));
   this.inputManager.on("cancel", this.cancel.bind(this));
 
-  this.actuator.setup(this.storageManager, {
+  this.actuator.setup(this.storageManager.storage, {
     nick: this.storageManager.getNick(),
     size: this.size
   });
@@ -24,10 +24,22 @@ GameManager.prototype.restart = function () {
   this.actuator.continue();
   this.setup();
 
-  /**** YaGames ADS ****/
-  if (domain.indexOf("yandex") !== -1) {
-    YaGames.init().then(ysdk => ysdk.adv.showFullscreenAdv());
+  /**** Ads ****/
+  if (this.storageManager.storage.getItem('mode') == 'yandex') {
+    setTimeout(function () {
+      YaGames.init().then(ysdk => ysdk.adv.showFullscreenAdv());
+    }, 2000);
   }
+
+  if (this.storageManager.storage.getItem('mode') == 'vk') {
+    vkBridge.send('VKWebAppShowNativeAds', { ad_format: 'interstitial' })
+      .then((data) => {
+        if (data.result) console.log('Реклама показана');
+        else console.log('Ошибка при показе');
+      })
+      .catch((error) => { console.log(error); });
+  }
+  /*** /Ads ****/
 };
 
 GameManager.prototype.cancel = function () {

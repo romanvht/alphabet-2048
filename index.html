@@ -28,11 +28,11 @@
       document.getElementById("style").setAttribute("href", "css/" + storageStyle + ".css?" + version);
     }
 
+    /**** Костыль для SDK ****/
     var domain = document.domain;
     var s = window.location.search.match(new RegExp('mode=([^&=]+)'));
     var mode = s ? s[1] : false;
 
-    /**** Костыль для SDK ****/
     if (domain.indexOf("yandex") !== -1) {
       window.localStorage.setItem('mode', 'yandex');
 

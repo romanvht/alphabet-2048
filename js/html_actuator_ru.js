@@ -58,6 +58,7 @@ HTMLActuator.prototype.setup = function (storage, metadata) {
       });
     }
 
+    document.getElementsByTagName('head')[0].appendChild(sdk);
     storage.setItem('mode', 'yandex');
   }
 
@@ -77,6 +78,7 @@ HTMLActuator.prototype.setup = function (storage, metadata) {
         });
     }
 
+    document.getElementsByTagName('head')[0].appendChild(sdk);
     storage.setItem('mode', 'vk');
   }
   /**** /Костыль для SDK ****/

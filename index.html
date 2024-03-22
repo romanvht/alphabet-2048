@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <meta name="description"
     content="Перемещайте буквы по полю. Когда две одинаковые буквы вместе, они сливаются в новую плитку со следующей буквой! Бейте рекорды игроков и соревнуйтесь с друзьями :)">
-  <title>Головоломка Алфавит</title>
+  <title>Алфавит 2048</title>
   <link rel="icon" href="images/favicon.ico">
 
   <link rel="preload" href="css/font/Oswald.woff" as="font" type="font/woff" crossorigin>
@@ -41,7 +41,7 @@
       document.getElementsByTagName('head')[0].appendChild(sdk);
     }
 
-    if(mode == 'vk' || window.localStorage.getItem('mode') == 'vk'){
+    if (mode == 'vk' || window.localStorage.getItem('mode') == 'vk') {
       window.localStorage.setItem('mode', 'vk');
 
       var sdk = document.createElement('script');

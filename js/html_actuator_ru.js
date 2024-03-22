@@ -34,13 +34,7 @@ HTMLActuator.prototype.setup = function (storage, metadata) {
   }
 
   /**** Костыль для SDK ****/
-  var domain = document.domain;
-  var s = window.location.search.match(new RegExp('mode=([^&=]+)'));
-  var mode = s ? s[1] : false;
-  var sdk = document.createElement('script');
-
-  if (domain.indexOf("yandex") !== -1 || storage.getItem('mode') == 'yandex') {
-    sdk.src = 'https://yandex.ru/games/sdk/v2';
+  if (storage.getItem('mode') == 'yandex') {
     sdk.onload = function () {
       YaGames.init().then(ysdk => {
         ysdk.getPlayer().then(_player => {
@@ -57,13 +51,9 @@ HTMLActuator.prototype.setup = function (storage, metadata) {
         ysdk.features.LoadingAPI?.ready();
       });
     }
-
-    document.getElementsByTagName('head')[0].appendChild(sdk);
-    storage.setItem('mode', 'yandex');
   }
 
-  if (mode == 'vk' || storage.getItem('mode') == 'vk') {
-    sdk.src = 'https://unpkg.com/@vkontakte/vk-bridge/dist/browser.min.js';
+  if (storage.getItem('mode') == 'vk') {
     sdk.onload = function () {
       vkBridge.send("VKWebAppInit", {});
       vkBridge.send('VKWebAppShowBannerAd', {
@@ -77,9 +67,6 @@ HTMLActuator.prototype.setup = function (storage, metadata) {
           console.log(error);
         });
     }
-
-    document.getElementsByTagName('head')[0].appendChild(sdk);
-    storage.setItem('mode', 'vk');
   }
   /**** /Костыль для SDK ****/
 

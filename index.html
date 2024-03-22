@@ -21,12 +21,34 @@
   <link id="style" href="css/black.css?v1.0.9" rel="stylesheet" type="text/css">
   <link id="size" href="#" rel="stylesheet" type="text/css">
   <script>
-    let version = 'v1.0.9';
+    var version = 'v1.0.9';
 
-    let storageStyle = window.localStorage.getItem('style');
+    var storageStyle = window.localStorage.getItem('style');
     if (storageStyle) {
       document.getElementById("style").setAttribute("href", "css/" + storageStyle + ".css?" + version);
     }
+
+    var domain = document.domain;
+    var s = window.location.search.match(new RegExp('mode=([^&=]+)'));
+    var mode = s ? s[1] : false;
+
+    /**** Костыль для SDK ****/
+    if (domain.indexOf("yandex") !== -1) {
+      window.localStorage.setItem('mode', 'yandex');
+
+      var sdk = document.createElement('script');
+      sdk.src = 'https://yandex.ru/games/sdk/v2';
+      document.getElementsByTagName('head')[0].appendChild(sdk);
+    }
+
+    if(mode == 'vk' || window.localStorage.getItem('mode') == 'vk'){
+      window.localStorage.setItem('mode', 'vk');
+
+      var sdk = document.createElement('script');
+      sdk.src = 'https://unpkg.com/@vkontakte/vk-bridge@2.14.1/dist/browser.min.js';
+      document.getElementsByTagName('head')[0].appendChild(sdk);
+    }
+    /**** /Костыль для SDK ****/
 
     window.onload = function () {
       var preloader = document.getElementById('p_prldr');

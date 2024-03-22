@@ -18,4 +18,4 @@ jobs:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          server-dir:  /romanvht_games/public_html/alphabet
+          server-dir:  /romanvht_games/public_html/alphabet/

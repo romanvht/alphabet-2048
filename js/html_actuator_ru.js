@@ -41,7 +41,7 @@ HTMLActuator.prototype.setup = function (storage, metadata) {
           var player = _player.getName();
 
           if (player) {
-            storage.setNick(player);
+            storage.setItem('nick', player);
             self.updateNick(player, true);
 
             console.log('Get yandex nickname: ' + player);

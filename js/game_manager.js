@@ -26,9 +26,7 @@ GameManager.prototype.restart = function () {
 
   /**** Ads ****/
   if (this.storageManager.storage.getItem('mode') == 'yandex') {
-    setTimeout(function () {
-      YaGames.init().then(ysdk => ysdk.adv.showFullscreenAdv());
-    }, 2000);
+    YaGames.init().then(ysdk => ysdk.adv.showFullscreenAdv());
   }
 
   if (this.storageManager.storage.getItem('mode') == 'vk') {

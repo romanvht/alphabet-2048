@@ -1,14 +1,21 @@
-function GameManager(InputManager, Actuator, StorageManager) {
+function GameManager(InputManager, Actuator, StorageManager, Size) {
   this.inputManager = new InputManager;
   this.storageManager = new StorageManager();
-  this.size = this.storageManager.getSize();
   this.actuator = new Actuator;
-
   this.startTiles = 2;
 
   this.inputManager.on("move", this.move.bind(this));
   this.inputManager.on("restart", this.restart.bind(this));
   this.inputManager.on("cancel", this.cancel.bind(this));
+  this.inputManager.on("resize", this.resize.bind(this));
+
+  if(Size){
+    this.size = Size;
+    this.storageManager.setSize(Size);
+  }else{
+    this.size = this.storageManager.getSize();
+    this.storageManager.setSize(this.storageManager.getSize());
+  }
 
   this.actuator.setup(this.storageManager.storage, {
     nick: this.storageManager.getNick(),
@@ -17,6 +24,40 @@ function GameManager(InputManager, Actuator, StorageManager) {
 
   this.setup();
 }
+
+GameManager.prototype.setup = function () {
+  var previousState = this.storageManager.getGameState();
+
+  if (previousState) {
+    this.grid = new Grid(this.size, previousState.grid.cells);
+    this.score = previousState.score;
+    this.over = previousState.over;
+    this.won = previousState.won;
+  } else {
+    this.grid = new Grid(this.size);
+    this.score = 0;
+    this.over = false;
+    this.won = false;
+
+    this.addStartTiles();
+  }
+
+  this.actuate();
+};
+
+GameManager.prototype.resize = function (newSize) {
+  this.size = newSize;
+
+  this.storageManager.setSize(newSize);
+
+  this.actuator.setup(this.storageManager.storage, {
+    nick: this.storageManager.getNick(),
+    size: this.size
+  });
+
+  this.actuator.continue();
+  this.setup();
+};
 
 GameManager.prototype.restart = function () {
   this.storageManager.clearLastGameState();
@@ -46,26 +87,6 @@ GameManager.prototype.isGameTerminated = function () {
   } else {
     return false;
   }
-};
-
-GameManager.prototype.setup = function () {
-  var previousState = this.storageManager.getGameState();
-
-  if (previousState) {
-    this.grid = new Grid(this.size, previousState.grid.cells);
-    this.score = previousState.score;
-    this.over = previousState.over;
-    this.won = previousState.won;
-  } else {
-    this.grid = new Grid(this.size);
-    this.score = 0;
-    this.over = false;
-    this.won = false;
-
-    this.addStartTiles();
-  }
-
-  this.actuate();
 };
 
 GameManager.prototype.addStartTiles = function () {

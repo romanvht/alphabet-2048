@@ -8,18 +8,7 @@ function LocalStorageManager() {
 }
 
 LocalStorageManager.prototype.getSize = function () {
-  var s = window.location.search.match(new RegExp('size=([^&=]+)'));
-  var searchSize = s ? s[1] : false;
-  var size = this.storage.getItem(this.sizeKey);
-
-  if (searchSize) {
-    size = searchSize;
-    this.storage.setItem(this.sizeKey, size);
-  } else if (!size) {
-    size = 4;
-  }
-
-  return Number(this.storage.getItem(this.sizeKey) || size);
+  return this.storage.getItem(this.sizeKey) || 4;
 };
 
 LocalStorageManager.prototype.setSize = function (size) {

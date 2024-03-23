@@ -76,6 +76,11 @@ KeyboardInputManager.prototype.listen = function () {
   this.bindButtonPress(".restart-button", this.restart);
   this.bindButtonPress(".cancel-button", this.cancel);
 
+  this.bindButtonPress("#link4", this.resize);
+  this.bindButtonPress("#link5", this.resize);
+  this.bindButtonPress("#link6", this.resize);
+  this.bindButtonPress("#link7", this.resize);
+
   // Respond to swipe events
   var touchStartClientX, touchStartClientY;
   var gameContainer = document.getElementsByClassName("game-body")[0];
@@ -130,6 +135,11 @@ KeyboardInputManager.prototype.listen = function () {
       self.emit("move", absDx > absDy ? (dx > 0 ? 1 : 3) : (dy > 0 ? 2 : 0));
     }
   });
+};
+
+KeyboardInputManager.prototype.resize = function (event) {
+  event.preventDefault();
+  this.emit("resize", event.srcElement.dataset.size);
 };
 
 KeyboardInputManager.prototype.restart = function (event) {

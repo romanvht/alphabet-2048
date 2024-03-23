@@ -52,22 +52,6 @@ HTMLActuator.prototype.setup = function (storage, metadata) {
       });
     }
   }
-
-  if (storage.getItem('mode') == 'vk') {
-    sdk.onload = function () {
-      vkBridge.send("VKWebAppInit", {});
-      vkBridge.send('VKWebAppShowBannerAd', {
-        banner_location: 'bottom'
-      })
-        .then((data) => {
-          if (data.result) console.log('Баннер показан');
-          else console.log('Ошибка при показе баннера');
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-  }
   /**** /Костыль для SDK ****/
 
   console.log('Game Ready');

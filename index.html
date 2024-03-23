@@ -23,29 +23,18 @@
   <script>
     var version = 'v1.0.9';
 
-    var storageStyle = window.localStorage.getItem('style');
-    if (storageStyle) {
+    if (window.localStorage.getItem('style')) {
       document.getElementById("style").setAttribute("href", "css/" + storageStyle + ".css?" + version);
     }
 
     /**** Костыль для SDK ****/
     var domain = document.domain;
-    var s = window.location.search.match(new RegExp('mode=([^&=]+)'));
-    var mode = s ? s[1] : false;
 
     if (domain.indexOf("yandex") !== -1) {
       window.localStorage.setItem('mode', 'yandex');
 
       var sdk = document.createElement('script');
       sdk.src = 'https://yandex.ru/games/sdk/v2';
-      document.getElementsByTagName('head')[0].appendChild(sdk);
-    }
-
-    if (mode == 'vk' || window.localStorage.getItem('mode') == 'vk') {
-      window.localStorage.setItem('mode', 'vk');
-
-      var sdk = document.createElement('script');
-      sdk.src = 'https://unpkg.com/@vkontakte/vk-bridge@2.14.1/dist/browser.min.js';
       document.getElementsByTagName('head')[0].appendChild(sdk);
     }
     /**** /Костыль для SDK ****/

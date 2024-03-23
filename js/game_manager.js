@@ -28,15 +28,6 @@ GameManager.prototype.restart = function () {
   if (this.storageManager.storage.getItem('mode') == 'yandex') {
     YaGames.init().then(ysdk => ysdk.adv.showFullscreenAdv());
   }
-
-  if (this.storageManager.storage.getItem('mode') == 'vk') {
-    vkBridge.send('VKWebAppShowNativeAds', { ad_format: 'interstitial' })
-      .then((data) => {
-        if (data.result) console.log('Реклама показана');
-        else console.log('Ошибка при показе');
-      })
-      .catch((error) => { console.log(error); });
-  }
   /*** /Ads ****/
 };
 

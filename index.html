@@ -23,7 +23,8 @@
   <script>
     var version = 'v1.0.9';
 
-    if (window.localStorage.getItem('style')) {
+    var storageStyle = window.localStorage.getItem('style');
+    if (storageStyle) {
       document.getElementById("style").setAttribute("href", "css/" + storageStyle + ".css?" + version);
     }
 

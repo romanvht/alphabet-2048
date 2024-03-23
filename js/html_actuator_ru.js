@@ -51,6 +51,7 @@ HTMLActuator.prototype.setup = function (storage, metadata) {
         });
 
         ysdk.features.LoadingAPI?.ready();
+        window.ysdk = ysdk;
       });
     }
   }

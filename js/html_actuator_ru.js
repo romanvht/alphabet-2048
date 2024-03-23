@@ -37,23 +37,21 @@ HTMLActuator.prototype.setup = function (storage, metadata) {
 
   /**** Костыль для SDK ****/
   if (storage.getItem('mode') == 'yandex') {
-    sdk.onload = function () {
-      YaGames.init().then(ysdk => {
-        ysdk.getPlayer().then(_player => {
-          var player = _player.getName();
+    YaGames.init().then(ysdk => {
+      ysdk.getPlayer().then(_player => {
+        var player = _player.getName();
 
-          if (player) {
-            storage.setItem('nick', player);
-            self.updateNick(player, true);
+        if (player) {
+          storage.setItem('nick', player);
+          self.updateNick(player, true);
 
-            console.log('Get yandex nickname: ' + player);
-          }
-        });
-
-        ysdk.features.LoadingAPI?.ready();
-        window.ysdk = ysdk;
+          console.log('Get yandex nickname: ' + player);
+        }
       });
-    }
+
+      ysdk.features.LoadingAPI?.ready();
+      window.ysdk = ysdk;
+    });
   }
   /**** /Костыль для SDK ****/
 

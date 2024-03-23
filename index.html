@@ -29,8 +29,7 @@
     }
 
     /**** Костыль для SDK ****/
-    //var domain = document.domain;
-    var domain = 'yandex';
+    var domain = document.domain;
 
     if (domain.indexOf("yandex") !== -1) {
       window.localStorage.setItem('mode', 'yandex');

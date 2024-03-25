@@ -30,10 +30,40 @@
 
     const domain = document.domain;
     if (domain.indexOf("ya") !== -1) {
+      /**** Ya.SDK ****/
       window.localStorage.setItem('mode', 'yandex');
-      var sdk = document.createElement('script');
+      let sdk = document.createElement('script');
       sdk.src = 'https://yandex.ru/games/sdk/v2';
       document.getElementsByTagName('head')[0].appendChild(sdk);
+
+      window.onload = function () {
+        YaGames.init().then(ysdk => {
+          ysdk.getPlayer().then(_player => {
+            var player = _player.getName();
+            if (player) {
+              window.localStorage.setItem('nick', player);
+              HTMLActuator.prototype.updateNick(player, true);
+              console.log('Get yandex nickname: ' + player);
+            }
+          });
+          ysdk.adv.showFullscreenAdv({
+            callbacks: {
+              onOpen: () => {
+                removePreloader()
+              },
+              onOffline: () => {
+                removePreloader()
+              },
+              onError: () => {
+                removePreloader()
+              }
+            }
+          });
+          ysdk.features.LoadingAPI?.ready();
+          window.ysdk = ysdk;
+        });
+      }
+      /**** /Ya.SDK ****/
     } else {
       window.onload = function () {
         removePreloader();
@@ -43,7 +73,7 @@
     function removePreloader() {
       let preloader = document.getElementById('p_prldr');
       preloader.classList.add('fadeout');
-      var gameTable = document.getElementById("game-table");
+      let gameTable = document.getElementById("game-table");
       gameTable.classList.add('load');
       setTimeout(function () {
         preloader.parentNode.removeChild(preloader);

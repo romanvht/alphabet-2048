@@ -9,10 +9,10 @@ function GameManager(InputManager, Actuator, StorageManager, Size) {
   this.inputManager.on("cancel", this.cancel.bind(this));
   this.inputManager.on("resize", this.resize.bind(this));
 
-  if(Size){
+  if (Size) {
     this.size = Size;
     this.storageManager.setSize(Size);
-  }else{
+  } else {
     this.size = this.storageManager.getSize();
     this.storageManager.setSize(this.storageManager.getSize());
   }

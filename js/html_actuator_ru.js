@@ -34,42 +34,6 @@ HTMLActuator.prototype.setup = function (storage, metadata) {
 
     self.gridContainer.append(rowDiv);
   }
-
-  /**** Костыль для SDK ****/
-  if (storage.getItem('mode') == 'yandex') {
-    YaGames.init().then(ysdk => {
-      ysdk.getPlayer().then(_player => {
-        var player = _player.getName();
-
-        if (player) {
-          storage.setItem('nick', player);
-          self.updateNick(player, true);
-
-          console.log('Get yandex nickname: ' + player);
-        }
-      });
-
-      ysdk.adv.showFullscreenAdv({
-        callbacks: {
-          onOpen: () => {
-            removePreloader()
-          },
-          onOffline: () => {
-            removePreloader()
-          },
-          onError: () => {
-            removePreloader()
-          }
-        }
-      });
-
-      ysdk.features.LoadingAPI?.ready();
-      window.ysdk = ysdk;
-    });
-  }
-  /**** /Костыль для SDK ****/
-
-  console.log('Game Ready');
 };
 
 HTMLActuator.prototype.actuate = function (grid, metadata) {

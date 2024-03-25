@@ -49,6 +49,20 @@ HTMLActuator.prototype.setup = function (storage, metadata) {
         }
       });
 
+      ysdk.adv.showFullscreenAdv({
+        callbacks: {
+          onOpen: () => {
+            removePreloader()
+          },
+          onOffline: () => {
+            removePreloader()
+          },
+          onError: () => {
+            removePreloader()
+          }
+        }
+      });
+
       ysdk.features.LoadingAPI?.ready();
       window.ysdk = ysdk;
     });

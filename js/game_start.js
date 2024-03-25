@@ -57,5 +57,5 @@ function loadLeaderboard(url, IDel, sync) {
 function setColor(str) {
   var storage = new LocalStorageManager;
   storage.setStyle(str);
-  document.getElementById("style").setAttribute("href", "css/" + str + ".css?" + version);
+  document.getElementById("style").setAttribute("href", "css/" + str + ".css");
 }

@@ -8,10 +8,8 @@
     content="Перемещайте буквы по полю. Когда две одинаковые буквы вместе, они сливаются в новую плитку со следующей буквой! Бейте рекорды игроков и соревнуйтесь с друзьями :)">
   <title>Алфавит 2048</title>
   <link rel="icon" href="images/favicon.ico">
-
   <link rel="preload" href="css/font/Oswald.woff" as="font" type="font/woff" crossorigin>
   <link rel="preload" href="css/font/Oswald.woff2" as="font" type="font/woff2" crossorigin>
-
   <link rel="preload" href="css/black.css?v1.1.0" as="style">
   <link rel="preload" href="css/blue.css?v1.1.0" as="style">
   <link rel="preload" href="css/green.css?v1.1.0" as="style">
@@ -20,42 +18,37 @@
   <link rel="preload" href="css/5.css?v1.1.0" as="style">
   <link rel="preload" href="css/6.css?v1.1.0" as="style">
   <link rel="preload" href="css/7.css?v1.1.0" as="style">
-
   <link href="css/style.css?v1.1.0" rel="stylesheet" type="text/css">
   <link href="css/block-color.css?v1.1.0" rel="stylesheet" type="text/css">
   <link id="style" href="css/black.css?v1.1.0" rel="stylesheet" type="text/css">
   <link id="size" href="#" rel="stylesheet" type="text/css">
   <script>
-    var version = 'v1.1.0';
-
-    var storageStyle = window.localStorage.getItem('style');
+    const storageStyle = window.localStorage.getItem('style');
     if (storageStyle) {
-      document.getElementById("style").setAttribute("href", "css/" + storageStyle + ".css?" + version);
+      document.getElementById("style").setAttribute("href", "css/" + storageStyle + ".css");
     }
 
-    /**** Костыль для SDK ****/
-    var domain = document.domain;
-
+    const domain = document.domain;
     if (domain.indexOf("ya") !== -1) {
       window.localStorage.setItem('mode', 'yandex');
-
       var sdk = document.createElement('script');
       sdk.src = 'https://yandex.ru/games/sdk/v2';
       document.getElementsByTagName('head')[0].appendChild(sdk);
+    } else {
+      window.onload = function () {
+        removePreloader();
+      }
     }
-    /**** /Костыль для SDK ****/
 
-    window.onload = function () {
-      var preloader = document.getElementById('p_prldr');
+    function removePreloader() {
+      let preloader = document.getElementById('p_prldr');
       preloader.classList.add('fadeout');
-
       var gameTable = document.getElementById("game-table");
       gameTable.classList.add('load');
-
       setTimeout(function () {
         preloader.parentNode.removeChild(preloader);
       }, 200);
-    };
+    }
   </script>
 </head>
 

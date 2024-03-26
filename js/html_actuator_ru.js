@@ -18,7 +18,7 @@ HTMLActuator.prototype.setup = function (storage, metadata) {
   document.querySelectorAll('.link').forEach(n => n.classList.remove('selected'));
   document.getElementById("link" + metadata.size).classList.add("selected");
 
-  self.sizeStyle.setAttribute("href", "css/" + metadata.size + ".css?");
+  self.sizeStyle.setAttribute("href", "css/" + metadata.size + ".css");
   self.updateNick(metadata.nick);
   self.gridContainer.innerHTML = '';
 

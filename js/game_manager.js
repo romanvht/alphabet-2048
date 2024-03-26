@@ -26,7 +26,7 @@ function GameManager(InputManager, Actuator, StorageManager, Size) {
 }
 
 GameManager.prototype.setup = function () {
-  var previousState = this.storageManager.getGameState();
+  let previousState = this.storageManager.getGameState();
 
   if (previousState) {
     this.grid = new Grid(this.size, previousState.grid.cells);
@@ -73,8 +73,8 @@ GameManager.prototype.restart = function () {
 };
 
 GameManager.prototype.cancel = function () {
-  var lastCourse = this.storageManager.getLastGameState();
-  var Course = this.storageManager.getGameState();
+  let lastCourse = this.storageManager.getLastGameState();
+  let Course = this.storageManager.getGameState();
   this.storageManager.setGameState(lastCourse);
   this.storageManager.setLastGameState(Course);
   this.actuator.continue();
@@ -90,7 +90,7 @@ GameManager.prototype.isGameTerminated = function () {
 };
 
 GameManager.prototype.addStartTiles = function () {
-  for (var i = 0; i < this.startTiles; i++) {
+  for (let i = 0; i < this.startTiles; i++) {
     this.addRandomTile();
   }
 };
@@ -98,8 +98,8 @@ GameManager.prototype.addStartTiles = function () {
 GameManager.prototype.addRandomTile = function () {
   if (this.grid.cellsAvailable()) {
     const randomEvenInt = (min, max) => Math.floor(Math.random() * ((max - min) / 2 + 1)) * 2 + min
-    var maxBukv = this.getMaxTile();
-    var value;
+    let maxBukv = this.getMaxTile();
+    let value;
 
     if (Math.random() > 0.95 && maxBukv > 20) {
       value = randomEvenInt(2, maxBukv / 2);
@@ -107,15 +107,15 @@ GameManager.prototype.addRandomTile = function () {
       value = (Math.random() > 0.9) ? 4 : 2;
     }
 
-    var tile = new Tile(this.grid.randomAvailableCell(), value);
+    let tile = new Tile(this.grid.randomAvailableCell(), value);
 
     this.grid.insertTile(tile);
   }
 };
 
 GameManager.prototype.getMaxTile = function () {
-  var grid = this.grid.cells;
-  var maxTile = 2;
+  let grid = this.grid.cells;
+  let maxTile = 2;
 
   grid.forEach(function (cell, index) {
     cell.forEach(function (tile, index) {
@@ -176,17 +176,17 @@ GameManager.prototype.moveTile = function (tile, cell) {
 };
 
 GameManager.prototype.move = function (direction) {
-  var self = this;
+  let self = this;
 
   if (this.isGameTerminated()) return;
 
   this.storageManager.setLastGameState(this.serialize());
 
-  var cell, tile;
+  let cell, tile;
 
-  var vector = this.getVector(direction);
-  var traversals = this.buildTraversals(vector);
-  var moved = false;
+  let vector = this.getVector(direction);
+  let traversals = this.buildTraversals(vector);
+  let moved = false;
 
   this.prepareTiles();
 
@@ -196,11 +196,11 @@ GameManager.prototype.move = function (direction) {
       tile = self.grid.cellContent(cell);
 
       if (tile) {
-        var positions = self.findFarthestPosition(cell, vector);
-        var next = self.grid.cellContent(positions.next);
+        let positions = self.findFarthestPosition(cell, vector);
+        let next = self.grid.cellContent(positions.next);
 
         if (next && next.value === tile.value && !next.mergedFrom) {
-          var merged = new Tile(positions.next, tile.value + 2);
+          let merged = new Tile(positions.next, tile.value + 2);
           merged.mergedFrom = [tile, next];
 
           self.grid.insertTile(merged);
@@ -235,7 +235,7 @@ GameManager.prototype.move = function (direction) {
 };
 
 GameManager.prototype.getVector = function (direction) {
-  var map = {
+  let map = {
     0: { x: 0, y: -1 }, // Up
     1: { x: 1, y: 0 },  // Right
     2: { x: 0, y: 1 },  // Down
@@ -246,9 +246,9 @@ GameManager.prototype.getVector = function (direction) {
 };
 
 GameManager.prototype.buildTraversals = function (vector) {
-  var traversals = { x: [], y: [] };
+  let traversals = { x: [], y: [] };
 
-  for (var pos = 0; pos < this.size; pos++) {
+  for (let pos = 0; pos < this.size; pos++) {
     traversals.x.push(pos);
     traversals.y.push(pos);
   }
@@ -260,7 +260,7 @@ GameManager.prototype.buildTraversals = function (vector) {
 };
 
 GameManager.prototype.findFarthestPosition = function (cell, vector) {
-  var previous;
+  let previous;
 
   do {
     previous = cell;
@@ -279,20 +279,20 @@ GameManager.prototype.movesAvailable = function () {
 };
 
 GameManager.prototype.tileMatchesAvailable = function () {
-  var self = this;
+  let self = this;
 
-  var tile;
+  let tile;
 
-  for (var x = 0; x < this.size; x++) {
-    for (var y = 0; y < this.size; y++) {
+  for (let x = 0; x < this.size; x++) {
+    for (let y = 0; y < this.size; y++) {
       tile = this.grid.cellContent({ x: x, y: y });
 
       if (tile) {
-        for (var direction = 0; direction < 4; direction++) {
-          var vector = self.getVector(direction);
-          var cell = { x: x + vector.x, y: y + vector.y };
+        for (let direction = 0; direction < 4; direction++) {
+          let vector = self.getVector(direction);
+          let cell = { x: x + vector.x, y: y + vector.y };
 
-          var other = self.grid.cellContent(cell);
+          let other = self.grid.cellContent(cell);
 
           if (other && other.value === tile.value) {
             return true;

@@ -13,7 +13,7 @@ function HTMLActuator() {
 }
 
 HTMLActuator.prototype.setup = function (storage, metadata) {
-  var self = this;
+  let self = this;
 
   document.querySelectorAll('.link').forEach(n => n.classList.remove('selected'));
   document.getElementById("link" + metadata.size).classList.add("selected");
@@ -23,11 +23,11 @@ HTMLActuator.prototype.setup = function (storage, metadata) {
   self.gridContainer.innerHTML = '';
 
   for (let row = 1; row <= metadata.size; row++) {
-    var rowDiv = document.createElement('div');
+    let rowDiv = document.createElement('div');
     rowDiv.classList.add('grid-row');
 
     for (let cell = 1; cell <= metadata.size; cell++) {
-      var cellDiv = document.createElement('div');
+      let cellDiv = document.createElement('div');
       cellDiv.classList.add('grid-cell');
       rowDiv.append(cellDiv);
     }
@@ -37,7 +37,7 @@ HTMLActuator.prototype.setup = function (storage, metadata) {
 };
 
 HTMLActuator.prototype.actuate = function (grid, metadata) {
-  var self = this;
+  let self = this;
 
   window.requestAnimationFrame(function () {
     self.clearContainer(self.tileContainer);
@@ -66,7 +66,7 @@ HTMLActuator.prototype.actuate = function (grid, metadata) {
 };
 
 HTMLActuator.prototype.postLeaderboard = function (url, sync) {
-  var ajax = new XMLHttpRequest();
+  let ajax = new XMLHttpRequest();
   ajax.open('GET', url, sync);
   ajax.onreadystatechange = function () {
     if (ajax.readyState == 4) {
@@ -97,19 +97,19 @@ HTMLActuator.prototype.clearContainer = function (container) {
 };
 
 HTMLActuator.prototype.addTile = function (tile) {
-  var self = this;
+  let self = this;
 
-  var wrapper = document.createElement("div");
-  var inner = document.createElement("div");
-  var position = tile.previousPosition || { x: tile.x, y: tile.y };
-  var positionClass = this.positionClass(position);
+  let wrapper = document.createElement("div");
+  let inner = document.createElement("div");
+  let position = tile.previousPosition || { x: tile.x, y: tile.y };
+  let positionClass = this.positionClass(position);
 
-  var classes = ["tile", "tile-" + tile.value, positionClass];
+  let classes = ["tile", "tile-" + tile.value, positionClass];
 
   if (tile.value > 56) classes.push("tile-super");
 
   this.applyClasses(wrapper, classes);
-  var outputtext = new Array();
+  let outputtext = new Array();
   outputtext[0] = "";
   outputtext[1] = "A";
   outputtext[2] = "Б";
@@ -181,10 +181,10 @@ HTMLActuator.prototype.positionClass = function (position) {
 };
 
 HTMLActuator.prototype.updateNick = function (nick, disable) {
-  var hiddenInput = document.querySelector(".hiddenInput");
+  let hiddenInput = document.querySelector(".hiddenInput");
   hiddenInput.textContent = nick;
 
-  var nickContainer = document.getElementById("nick");
+  let nickContainer = document.getElementById("nick");
   nickContainer.setAttribute("value", nick);
 
   if (hiddenInput.clientWidth < 50) {
@@ -203,7 +203,7 @@ HTMLActuator.prototype.updateNick = function (nick, disable) {
 HTMLActuator.prototype.updateScore = function (score) {
   this.clearContainer(this.scoreContainer);
 
-  var difference = score - this.score;
+  let difference = score - this.score;
   this.score = score;
   if (this.score > 9999) {
     this.scoreContainer.textContent = Math.round(this.score / 100) / 10 + "т";
@@ -211,7 +211,7 @@ HTMLActuator.prototype.updateScore = function (score) {
     this.scoreContainer.textContent = this.score;
   }
   if (difference > 0) {
-    var addition = document.createElement("div");
+    let addition = document.createElement("div");
     addition.classList.add("score-addition");
     addition.textContent = "+" + difference;
 
@@ -228,8 +228,8 @@ HTMLActuator.prototype.updateBestScore = function (bestScore) {
 };
 
 HTMLActuator.prototype.message = function (won) {
-  var type = won ? "game-won" : "game-over";
-  var message = won ? "Победа!" : "Ваш счет: " + this.score;
+  let type = won ? "game-won" : "game-over";
+  let message = won ? "Победа!" : "Ваш счет: " + this.score;
 
   if (typeof ga !== "undefined") {
     ga("send", "event", "game", "end", type, this.score);

@@ -1,8 +1,8 @@
 /**** Events ****/
 document.getElementById('linkTop').onclick = function () {
-  var storage = new LocalStorageManager;
-  var topBlock = document.getElementById('top-container');
-  var gameBlock = document.querySelector('.game-table');
+  let storage = new LocalStorageManager;
+  let topBlock = document.getElementById('top-container');
+  let gameBlock = document.querySelector('.game-table');
   if (topBlock.style.display == "none") {
     topBlock.style.display = "block";
     gameBlock.style.visibility = "hidden";
@@ -18,8 +18,8 @@ document.getElementById('linkTop').onclick = function () {
 };
 
 document.getElementById('nick').oninput = function () {
-  var storage = new LocalStorageManager;
-  var hiddenInput = document.querySelector(".hiddenInput");
+  let storage = new LocalStorageManager;
+  let hiddenInput = document.querySelector(".hiddenInput");
   hiddenInput.textContent = this.value;
 
   if (hiddenInput.clientWidth < 50) {
@@ -35,7 +35,7 @@ document.getElementById('nick').oninput = function () {
 /**** /Events ****/
 
 function loadLeaderboard(url, IDel, sync) {
-  var ajax = new XMLHttpRequest();
+  let ajax = new XMLHttpRequest();
   ajax.open('GET', url, sync);
   ajax.onreadystatechange = function () {
     if (ajax.readyState == 4) {
@@ -55,7 +55,7 @@ function loadLeaderboard(url, IDel, sync) {
 }
 
 function setColor(str) {
-  var storage = new LocalStorageManager;
+  let storage = new LocalStorageManager;
   storage.setStyle(str);
   document.getElementById("style").setAttribute("href", "css/" + str + ".css");
 }

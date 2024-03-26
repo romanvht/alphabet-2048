@@ -39,7 +39,7 @@
       window.onload = function () {
         YaGames.init().then(ysdk => {
           ysdk.getPlayer().then(_player => {
-            var player = _player.getName();
+            let player = _player.getName();
             if (player) {
               window.localStorage.setItem('nick', player);
               HTMLActuator.prototype.updateNick(player, true);

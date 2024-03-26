@@ -28,13 +28,13 @@ LocalStorageManager.prototype.setNick = function (str) {
 };
 
 LocalStorageManager.prototype.getNick = function () {
-  var storageNick = this.storage.getItem(this.nickKey);
+  let storageNick = this.storage.getItem(this.nickKey);
 
   if(storageNick){
     return storageNick;
   }else{
-    var randID = Math.floor(Math.random() * (999999 - 100000 + 1)) + 100000;
-    var randNick = 'Игрок_' + randID;
+    let randID = Math.floor(Math.random() * (999999 - 100000 + 1)) + 100000;
+    let randNick = 'Игрок_' + randID;
 
     this.storage.setItem(this.nickKey, randNick);
 
@@ -51,7 +51,7 @@ LocalStorageManager.prototype.getStyle = function () {
 };
 
 LocalStorageManager.prototype.getGameState = function () {
-  var stateJSON = this.storage.getItem(this.gameStateKey + this.getSize());
+  let stateJSON = this.storage.getItem(this.gameStateKey + this.getSize());
   return stateJSON ? JSON.parse(stateJSON) : null;
 };
 
@@ -60,7 +60,7 @@ LocalStorageManager.prototype.setGameState = function (gameState) {
 };
 
 LocalStorageManager.prototype.getLastGameState = function () {
-  var stateJSON = this.storage.getItem("last" + this.gameStateKey + this.getSize());
+  let stateJSON = this.storage.getItem("last" + this.gameStateKey + this.getSize());
   return stateJSON ? JSON.parse(stateJSON) : null;
 };
 

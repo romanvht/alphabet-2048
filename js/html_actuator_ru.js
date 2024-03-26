@@ -109,39 +109,8 @@ HTMLActuator.prototype.addTile = function (tile) {
   if (tile.value > 56) classes.push("tile-super");
 
   this.applyClasses(wrapper, classes);
-  let outputtext = new Array();
-  outputtext[0] = "";
-  outputtext[1] = "A";
-  outputtext[2] = "Б";
-  outputtext[3] = "В";
-  outputtext[4] = "Г";
-  outputtext[5] = "Д";
-  outputtext[6] = "Е";
-  outputtext[7] = "Ж";
-  outputtext[8] = "З";
-  outputtext[9] = "И";
-  outputtext[10] = "К";
-  outputtext[11] = "Л";
-  outputtext[12] = "М";
-  outputtext[13] = "Н";
-  outputtext[14] = "О";
-  outputtext[15] = "П";
-  outputtext[16] = "Р";
-  outputtext[17] = "С";
-  outputtext[18] = "Т";
-  outputtext[19] = "У";
-  outputtext[20] = "Ф";
-  outputtext[21] = "Х";
-  outputtext[22] = "Ц";
-  outputtext[23] = "Ч";
-  outputtext[24] = "Ш";
-  outputtext[25] = "Ы";
-  outputtext[26] = "Э";
-  outputtext[27] = "Ю";
-  outputtext[28] = "Я";
-  outputtext[29] = "∞";
-  outputtext[30] = "∞²";
-
+  let outputtext = ['∞', 'A', 'Б', 'В', 'Г', 'Д', 'Е', 'Ж', 'З', 'И', 'К', 'Л', 'М', 'Н', 'О', 'П', 'Р', 'С', 'Т', 'У', 'Ф', 'Х', 'Ц', 'Ч', 'Ш', 'Ы', 'Э', 'Ю', 'Я', '∞'];
+  
   inner.classList.add("tile-inner");
   inner.textContent = outputtext[(tile.value / 2)] || '';
 

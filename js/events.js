@@ -17,7 +17,6 @@ document.getElementById('linkTop').onclick = function () {
 };
 
 document.getElementById('nick').oninput = function () {
-  let storage = window.localStorage;
   let hiddenInput = document.querySelector(".hiddenInput");
   hiddenInput.textContent = this.value;
 

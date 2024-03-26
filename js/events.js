@@ -1,6 +1,5 @@
 /**** Events ****/
 document.getElementById('linkTop').onclick = function () {
-  let storage = new LocalStorageManager;
   let topBlock = document.getElementById('top-container');
   let gameBlock = document.querySelector('.game-table');
   if (topBlock.style.display == "none") {
@@ -8,7 +7,7 @@ document.getElementById('linkTop').onclick = function () {
     gameBlock.style.visibility = "hidden";
     this.classList.add('selected');
     this.innerHTML = 'X';
-    loadLeaderboard('https://api-alphabet.romanvht.ru/top.php?cell=' + storage.getSize(), 'top-container', true);
+    loadLeaderboard('https://api-alphabet.romanvht.ru/top.php?cell=' + window.localStorage.getItem('size'), 'top-container', true);
   } else {
     topBlock.style.display = "none";
     gameBlock.style.visibility = "visible";
@@ -18,7 +17,7 @@ document.getElementById('linkTop').onclick = function () {
 };
 
 document.getElementById('nick').oninput = function () {
-  let storage = new LocalStorageManager;
+  let storage = window.localStorage;
   let hiddenInput = document.querySelector(".hiddenInput");
   hiddenInput.textContent = this.value;
 
@@ -30,7 +29,7 @@ document.getElementById('nick').oninput = function () {
     this.style.width = hiddenInput.clientWidth + "px";
   }
 
-  storage.setNick(this.value);
+  window.localStorage.setItem('nick', this.value);
 }
 /**** /Events ****/
 
@@ -55,7 +54,6 @@ function loadLeaderboard(url, IDel, sync) {
 }
 
 function setColor(str) {
-  let storage = new LocalStorageManager;
-  storage.setStyle(str);
+  window.localStorage.setItem('style', str);
   document.getElementById("style").setAttribute("href", "css/" + str + ".css");
 }

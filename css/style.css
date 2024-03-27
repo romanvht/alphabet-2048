@@ -347,16 +347,11 @@ img {
   display: flex;
   justify-content: center;
   align-items: center;
-  visibility: hidden;
   position: absolute;
   top: 140px;
   bottom: 70px;
   left: 0px;
   right: 0px;
-}
-
-.game-table.load {
-  visibility: visible;
 }
 
 .resize-game {

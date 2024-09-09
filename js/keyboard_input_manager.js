@@ -1,168 +1,161 @@
-function KeyboardInputManager() {
-  this.events = {};
+class KeyboardInputManager {
+  constructor() {
+    this.events = {};
 
-  if (window.navigator.msPointerEnabled) {
-    //Internet Explorer 10 style
-    this.eventTouchstart    = "MSPointerDown";
-    this.eventTouchmove     = "MSPointerMove";
-    this.eventTouchend      = "MSPointerUp";
-  } else {
-    this.eventTouchstart    = "touchstart";
-    this.eventTouchmove     = "touchmove";
-    this.eventTouchend      = "touchend";
+    if (window.navigator.msPointerEnabled) {
+      //Internet Explorer 10 style
+      this.eventTouchstart = "MSPointerDown";
+      this.eventTouchmove = "MSPointerMove";
+      this.eventTouchend = "MSPointerUp";
+    } else {
+      this.eventTouchstart = "touchstart";
+      this.eventTouchmove = "touchmove";
+      this.eventTouchend = "touchend";
+    }
+
+    this.listen();
   }
-
-  this.listen();
-}
-
-KeyboardInputManager.prototype.on = function (event, callback) {
-  if (!this.events[event]) {
-    this.events[event] = [];
+  on(event, callback) {
+    if (!this.events[event]) {
+      this.events[event] = [];
+    }
+    this.events[event].push(callback);
   }
-  this.events[event].push(callback);
-};
-
-KeyboardInputManager.prototype.emit = function (event, data) {
-  let callbacks = this.events[event];
-  if (callbacks) {
-    callbacks.forEach(function (callback) {
-      callback(data);
-    });
+  emit(event, data) {
+    let callbacks = this.events[event];
+    if (callbacks) {
+      callbacks.forEach(function (callback) {
+        callback(data);
+      });
+    }
   }
-};
+  listen() {
+    let self = this;
 
-KeyboardInputManager.prototype.listen = function () {
-  let self = this;
+    let map = {
+      38: 0, // Up
+      39: 1, // Right
+      40: 2, // Down
+      37: 3, // Left
+      75: 0, // Vim up
+      76: 1, // Vim right
+      74: 2, // Vim down
+      72: 3, // Vim left
+      87: 0, // W
+      68: 1, // D
+      83: 2, // S
+      65: 3 // A
+    };
 
-  let map = {
-    38: 0, // Up
-    39: 1, // Right
-    40: 2, // Down
-    37: 3, // Left
-    75: 0, // Vim up
-    76: 1, // Vim right
-    74: 2, // Vim down
-    72: 3, // Vim left
-    87: 0, // W
-    68: 1, // D
-    83: 2, // S
-    65: 3  // A
-  };
+    // Respond to direction keys
+    document.addEventListener("keydown", function (event) {
+      let modifiers = event.altKey || event.ctrlKey || event.metaKey ||
+        event.shiftKey;
+      let mapped = map[event.which];
 
-  // Respond to direction keys
-  document.addEventListener("keydown", function (event) {
-    let modifiers = event.altKey || event.ctrlKey || event.metaKey ||
-                    event.shiftKey;
-    let mapped    = map[event.which];
+      // Ignore the event if it's happening in a text field
+      if (self.targetIsInput(event)) return;
 
-    // Ignore the event if it's happening in a text field
-    if (self.targetIsInput(event)) return;
-
-    if (!modifiers) {
-      if (mapped !== undefined) {
-        event.preventDefault();
-        self.emit("move", mapped);
+      if (!modifiers) {
+        if (mapped !== undefined) {
+          event.preventDefault();
+          self.emit("move", mapped);
+        }
       }
-    }
 
-    // R key restarts the game
-    if (!modifiers && event.which === 82) {
-      self.restart.call(self, event);
-    }
-  });
+      // R key restarts the game
+      if (!modifiers && event.which === 82) {
+        self.restart.call(self, event);
+      }
+    });
 
-  // Respond to button presses
-  this.bindButtonPress(".retry-button", this.restart);
-  this.bindButtonPress(".restart-button", this.restart);
-  this.bindButtonPress(".cancel-button", this.cancel);
+    // Respond to button presses
+    this.bindButtonPress(".retry-button", this.restart);
+    this.bindButtonPress(".restart-button", this.restart);
+    this.bindButtonPress(".cancel-button", this.cancel);
 
-  this.bindButtonPress("#link4", this.resize);
-  this.bindButtonPress("#link5", this.resize);
-  this.bindButtonPress("#link6", this.resize);
-  this.bindButtonPress("#link7", this.resize);
+    this.bindButtonPress("#link4", this.resize);
+    this.bindButtonPress("#link5", this.resize);
+    this.bindButtonPress("#link6", this.resize);
+    this.bindButtonPress("#link7", this.resize);
 
-  // Respond to swipe events
-  let touchStartClientX, touchStartClientY;
-  let gameContainer = document.getElementsByClassName("game-body")[0];
+    // Respond to swipe events
+    let touchStartClientX, touchStartClientY;
+    let gameContainer = document.getElementsByClassName("game-body")[0];
 
-  gameContainer.addEventListener(this.eventTouchstart, function (event) {
-    if ((!window.navigator.msPointerEnabled && event.touches.length > 1) ||
+    gameContainer.addEventListener(this.eventTouchstart, function (event) {
+      if ((!window.navigator.msPointerEnabled && event.touches.length > 1) ||
         event.targetTouches > 1 ||
         self.targetIsInput(event)) {
-      return; // Ignore if touching with more than 1 finger or touching input
-    }
+        return; // Ignore if touching with more than 1 finger or touching input
+      }
 
-    if (window.navigator.msPointerEnabled) {
-      touchStartClientX = event.pageX;
-      touchStartClientY = event.pageY;
-    } else {
-      touchStartClientX = event.touches[0].clientX;
-      touchStartClientY = event.touches[0].clientY;
-    }
+      if (window.navigator.msPointerEnabled) {
+        touchStartClientX = event.pageX;
+        touchStartClientY = event.pageY;
+      } else {
+        touchStartClientX = event.touches[0].clientX;
+        touchStartClientY = event.touches[0].clientY;
+      }
 
-    event.preventDefault();
-  });
+      event.preventDefault();
+    });
 
-  gameContainer.addEventListener(this.eventTouchmove, function (event) {
-    event.preventDefault();
-  });
+    gameContainer.addEventListener(this.eventTouchmove, function (event) {
+      event.preventDefault();
+    });
 
-  gameContainer.addEventListener(this.eventTouchend, function (event) {
-    if ((!window.navigator.msPointerEnabled && event.touches.length > 0) ||
+    gameContainer.addEventListener(this.eventTouchend, function (event) {
+      if ((!window.navigator.msPointerEnabled && event.touches.length > 0) ||
         event.targetTouches > 0 ||
         self.targetIsInput(event)) {
-      return; // Ignore if still touching with one or more fingers or input
-    }
+        return; // Ignore if still touching with one or more fingers or input
+      }
 
-    let touchEndClientX, touchEndClientY;
+      let touchEndClientX, touchEndClientY;
 
-    if (window.navigator.msPointerEnabled) {
-      touchEndClientX = event.pageX;
-      touchEndClientY = event.pageY;
-    } else {
-      touchEndClientX = event.changedTouches[0].clientX;
-      touchEndClientY = event.changedTouches[0].clientY;
-    }
+      if (window.navigator.msPointerEnabled) {
+        touchEndClientX = event.pageX;
+        touchEndClientY = event.pageY;
+      } else {
+        touchEndClientX = event.changedTouches[0].clientX;
+        touchEndClientY = event.changedTouches[0].clientY;
+      }
 
-    let dx = touchEndClientX - touchStartClientX;
-    let absDx = Math.abs(dx);
+      let dx = touchEndClientX - touchStartClientX;
+      let absDx = Math.abs(dx);
 
-    let dy = touchEndClientY - touchStartClientY;
-    let absDy = Math.abs(dy);
+      let dy = touchEndClientY - touchStartClientY;
+      let absDy = Math.abs(dy);
 
-    if (Math.max(absDx, absDy) > 10) {
-      // (right : left) : (down : up)
-      self.emit("move", absDx > absDy ? (dx > 0 ? 1 : 3) : (dy > 0 ? 2 : 0));
-    }
-  });
-};
-
-KeyboardInputManager.prototype.resize = function (event) {
-  event.preventDefault();
-  this.emit("resize", event.srcElement.dataset.size);
-};
-
-KeyboardInputManager.prototype.restart = function (event) {
-  event.preventDefault();
-  this.emit("restart");
-};
-
-KeyboardInputManager.prototype.cancel = function (event) {
-  event.preventDefault();
-  this.emit("cancel");
-};
-
-KeyboardInputManager.prototype.keepPlaying = function (event) {
-  event.preventDefault();
-  this.emit("keepPlaying");
-};
-
-KeyboardInputManager.prototype.bindButtonPress = function (selector, fn) {
-  let button = document.querySelector(selector);
-  button.addEventListener("click", fn.bind(this));
-  button.addEventListener(this.eventTouchend, fn.bind(this));
-};
-
-KeyboardInputManager.prototype.targetIsInput = function (event) {
-  return event.target.tagName.toLowerCase() === "input";
-};
+      if (Math.max(absDx, absDy) > 10) {
+        // (right : left) : (down : up)
+        self.emit("move", absDx > absDy ? (dx > 0 ? 1 : 3) : (dy > 0 ? 2 : 0));
+      }
+    });
+  }
+  resize(event) {
+    event.preventDefault();
+    this.emit("resize", event.srcElement.dataset.size);
+  }
+  restart(event) {
+    event.preventDefault();
+    this.emit("restart");
+  }
+  cancel(event) {
+    event.preventDefault();
+    this.emit("cancel");
+  }
+  keepPlaying(event) {
+    event.preventDefault();
+    this.emit("keepPlaying");
+  }
+  bindButtonPress(selector, fn) {
+    let button = document.querySelector(selector);
+    button.addEventListener("click", fn.bind(this));
+    button.addEventListener(this.eventTouchend, fn.bind(this));
+  }
+  targetIsInput(event) {
+    return event.target.tagName.toLowerCase() === "input";
+  }
+}

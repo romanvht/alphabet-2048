@@ -1,77 +1,65 @@
-function LocalStorageManager() {
-  this.bestScoreKey = "bestScore";
-  this.gameStateKey = "gameState";
-  this.sizeKey = "size";
-  this.nickKey = "nick";
-  this.styleKey = "style";
-  this.storage = window.localStorage;
-}
-
-LocalStorageManager.prototype.getSize = function () {
-  return this.storage.getItem(this.sizeKey) || 4;
-};
-
-LocalStorageManager.prototype.setSize = function (size) {
-  return this.storage.setItem(this.sizeKey, size);
-};
-
-LocalStorageManager.prototype.getBestScore = function () {
-  return this.storage.getItem(this.bestScoreKey + this.getSize()) || 0;
-};
-
-LocalStorageManager.prototype.setBestScore = function (score,) {
-  this.storage.setItem(this.bestScoreKey + this.getSize(), score);
-};
-
-LocalStorageManager.prototype.setNick = function (str) {
-  this.storage.setItem(this.nickKey, str);
-};
-
-LocalStorageManager.prototype.getNick = function () {
-  let storageNick = this.storage.getItem(this.nickKey);
-
-  if(storageNick){
-    return storageNick;
-  }else{
-    let randID = Math.floor(Math.random() * (999999 - 100000 + 1)) + 100000;
-    let randNick = 'Игрок_' + randID;
-
-    this.storage.setItem(this.nickKey, randNick);
-
-    return randNick;
+class LocalStorageManager {
+  constructor() {
+    this.bestScoreKey = "bestScore";
+    this.gameStateKey = "gameState";
+    this.sizeKey = "size";
+    this.nickKey = "nick";
+    this.styleKey = "style";
+    this.storage = window.localStorage;
   }
-};
+  getSize() {
+    return this.storage.getItem(this.sizeKey) || 4;
+  }
+  setSize(size) {
+    return this.storage.setItem(this.sizeKey, size);
+  }
+  getBestScore() {
+    return this.storage.getItem(this.bestScoreKey + this.getSize()) || 0;
+  }
+  setBestScore(score) {
+    this.storage.setItem(this.bestScoreKey + this.getSize(), score);
+  }
+  setNick(str) {
+    this.storage.setItem(this.nickKey, str);
+  }
+  getNick() {
+    let storageNick = this.storage.getItem(this.nickKey);
 
-LocalStorageManager.prototype.setStyle = function (str) {
-  this.storage.setItem(this.styleKey, str);
-};
+    if (storageNick) {
+      return storageNick;
+    } else {
+      let randID = Math.floor(Math.random() * (999999 - 100000 + 1)) + 100000;
+      let randNick = 'Игрок_' + randID;
 
-LocalStorageManager.prototype.getStyle = function () {
-  return this.storage.getItem(this.styleKey) || 'black';
-};
+      this.storage.setItem(this.nickKey, randNick);
 
-LocalStorageManager.prototype.getGameState = function () {
-  let stateJSON = this.storage.getItem(this.gameStateKey + this.getSize());
-  return stateJSON ? JSON.parse(stateJSON) : null;
-};
-
-LocalStorageManager.prototype.setGameState = function (gameState) {
-  this.storage.setItem(this.gameStateKey + this.getSize(), JSON.stringify(gameState));
-};
-
-LocalStorageManager.prototype.getLastGameState = function () {
-  let stateJSON = this.storage.getItem("last" + this.gameStateKey + this.getSize());
-  return stateJSON ? JSON.parse(stateJSON) : null;
-};
-
-LocalStorageManager.prototype.setLastGameState = function (gameState) {
-  this.storage.setItem("last" + this.gameStateKey + this.getSize(), JSON.stringify(gameState));
-};
-
-LocalStorageManager.prototype.clearGameState = function () {
-  this.storage.removeItem(this.gameStateKey + this.getSize());
-};
-
-LocalStorageManager.prototype.clearLastGameState = function () {
-  this.storage.removeItem("last" + this.gameStateKey + this.getSize());
-};
+      return randNick;
+    }
+  }
+  setStyle(str) {
+    this.storage.setItem(this.styleKey, str);
+  }
+  getStyle() {
+    return this.storage.getItem(this.styleKey) || 'black';
+  }
+  getGameState() {
+    let stateJSON = this.storage.getItem(this.gameStateKey + this.getSize());
+    return stateJSON ? JSON.parse(stateJSON) : null;
+  }
+  setGameState(gameState) {
+    this.storage.setItem(this.gameStateKey + this.getSize(), JSON.stringify(gameState));
+  }
+  getLastGameState() {
+    let stateJSON = this.storage.getItem("last" + this.gameStateKey + this.getSize());
+    return stateJSON ? JSON.parse(stateJSON) : null;
+  }
+  setLastGameState(gameState) {
+    this.storage.setItem("last" + this.gameStateKey + this.getSize(), JSON.stringify(gameState));
+  }
+  clearGameState() {
+    this.storage.removeItem(this.gameStateKey + this.getSize());
+  }
+  clearLastGameState() {
+    this.storage.removeItem("last" + this.gameStateKey + this.getSize());
+  }
+}

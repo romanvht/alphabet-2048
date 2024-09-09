@@ -141,7 +141,7 @@ class KeyboardInputManager {
 
     // Событие для изменения размера инпута ника
     document.getElementById('nick').addEventListener('input', function (event) {
-      self.emit("resizeNickInput", event);
+      self.emit("updateNick", event);
     });
 
     // Событие для изменения цвета

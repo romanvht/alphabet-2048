@@ -58,10 +58,8 @@ class HTMLActuator {
 
       if (metadata.terminated) {
         if (metadata.over) {
-          self.postLeaderboard("https://api-alphabet.romanvht.ru/post.php?name=" + metadata.nick + "&size=" + metadata.size + "&score=" + metadata.score + "&win=0", true);
           self.message(false);
         } else if (metadata.won) {
-          self.postLeaderboard("https://api-alphabet.romanvht.ru/post.php?name=" + metadata.nick + "&size=" + metadata.size + "&score=" + metadata.score + "&win=1", true);
           self.message(true);
         }
       }
@@ -196,7 +194,6 @@ class HTMLActuator {
       this.gameBlock.style.visibility = "hidden";
       linkTop.classList.add('selected');
       linkTop.innerHTML = 'X';
-      this.loadLeaderboard('https://api-alphabet.romanvht.ru/top.php?cell=' + window.localStorage.getItem('size'), 'top-container', true);
     } else {
       this.topBlock.style.display = "none";
       this.gameBlock.style.visibility = "visible";
@@ -215,43 +212,6 @@ class HTMLActuator {
     } else {
       nickInput.style.width = this.hiddenInput.clientWidth + "px";
     }
-
-    window.localStorage.setItem('nick', nickInput.value);
-  }
-  loadLeaderboard(url, IDel, sync) {
-    let ajax = new XMLHttpRequest();
-    ajax.open('GET', url, sync);
-    ajax.onreadystatechange = function () {
-      if (ajax.readyState == 4) {
-        if (ajax.status == 200) {
-          document.getElementById(IDel).innerHTML = ajax.responseText;
-          console.log('Успешное выполнение GET запроса: ' + url + ': HTML to element #' + IDel);
-        } else {
-          document.getElementById(IDel).innerHTML = 'Не удалось загрузить информацию...';
-          console.log('Ошибка отправки запроса GET: ' + url + ': HTML to element #' + IDel + '(' + ajax.status + ': ' + ajax.statusText + ')');
-        }
-      } else {
-        document.getElementById(IDel).innerHTML = 'Загрузка...';
-        console.log('Отправка запроса GET: ' + url + ': HTML to element #' + IDel);
-      }
-    };
-    ajax.send(null);
-  }  
-  postLeaderboard(url, sync) {
-    let ajax = new XMLHttpRequest();
-    ajax.open('GET', url, sync);
-    ajax.onreadystatechange = function () {
-      if (ajax.readyState == 4) {
-        if (ajax.status == 200) {
-          console.log('Успешное выполнение GET запроса: ' + url);
-        } else {
-          console.log('Ошибка отправки запроса GET: ' + url + '(' + ajax.status + ': ' + ajax.statusText + ')');
-        }
-      } else {
-        console.log('Отправка запроса GET: ' + url);
-      }
-    };
-    ajax.send(null);
   }
   setColor(str) {
     this.style.setAttribute("href", "css/" + str + ".css");

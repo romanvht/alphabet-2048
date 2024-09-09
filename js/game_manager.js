@@ -10,7 +10,7 @@ class GameManager {
     this.inputManager.on("cancel", this.cancel.bind(this));
     this.inputManager.on("resize", this.resize.bind(this));
     this.inputManager.on("toggleLeaderboard", this.leaderboard.bind(this));
-    this.inputManager.on("resizeNickInput", this.resizeNick.bind(this));
+    this.inputManager.on("updateNick", this.updateNick.bind(this));
     this.inputManager.on("setColor", this.setColor.bind(this));
 
     if (Size) {
@@ -123,6 +123,8 @@ class GameManager {
     }
 
     if (this.over) {
+      const win = this.won ? 1 : 0;
+      this.postLeaderboard("https://api-alphabet.romanvht.ru/post.php?name=" + this.storageManager.getNick() + "&size=" + this.size + "&score=" + this.score + "&win=" + win, true);
       this.storageManager.clearGameState();
     } else {
       this.storageManager.setGameState(this.serialize());
@@ -288,15 +290,53 @@ class GameManager {
     return first.x === second.x && first.y === second.y;
   }
   leaderboard (event) {
+    this.loadLeaderboard('https://api-alphabet.romanvht.ru/top.php?cell=' + this.size, 'top-container', true);
     this.actuator.toggleLeaderboard(event);
   }
-  resizeNick (event) {
+  updateNick (event) {
+    const nickInput = event.currentTarget;
+    this.storageManager.setNick(nickInput.value);
     this.actuator.resizeNickInput(event);
   }
   setColor (str) {
     this.storageManager.setStyle(str);
     this.actuator.setColor(str);
   }
+  postLeaderboard(url, sync) {
+    let ajax = new XMLHttpRequest();
+    ajax.open('GET', url, sync);
+    ajax.onreadystatechange = function () {
+      if (ajax.readyState == 4) {
+        if (ajax.status == 200) {
+          console.log('Успешное выполнение GET запроса: ' + url);
+        } else {
+          console.log('Ошибка отправки запроса GET: ' + url + '(' + ajax.status + ': ' + ajax.statusText + ')');
+        }
+      } else {
+        console.log('Отправка запроса GET: ' + url);
+      }
+    };
+    ajax.send(null);
+  }
+  loadLeaderboard(url, IDel, sync) {
+    let ajax = new XMLHttpRequest();
+    ajax.open('GET', url, sync);
+    ajax.onreadystatechange = function () {
+      if (ajax.readyState == 4) {
+        if (ajax.status == 200) {
+          document.getElementById(IDel).innerHTML = ajax.responseText;
+          console.log('Успешное выполнение GET запроса: ' + url + ': HTML to element #' + IDel);
+        } else {
+          document.getElementById(IDel).innerHTML = 'Не удалось загрузить информацию...';
+          console.log('Ошибка отправки запроса GET: ' + url + ': HTML to element #' + IDel + '(' + ajax.status + ': ' + ajax.statusText + ')');
+        }
+      } else {
+        document.getElementById(IDel).innerHTML = 'Загрузка...';
+        console.log('Отправка запроса GET: ' + url + ': HTML to element #' + IDel);
+      }
+    };
+    ajax.send(null);
+  } 
 }
 
 

@@ -133,6 +133,25 @@ class KeyboardInputManager {
         self.emit("move", absDx > absDy ? (dx > 0 ? 1 : 3) : (dy > 0 ? 2 : 0));
       }
     });
+
+    // Событие для переключения таблицы лидеров
+    document.getElementById('linkTop').addEventListener('click', function (event) {
+      self.emit("toggleLeaderboard", event);
+    });
+
+    // Событие для изменения размера инпута ника
+    document.getElementById('nick').addEventListener('input', function (event) {
+      self.emit("resizeNickInput", event);
+    });
+
+    // Событие для изменения цвета
+    document.querySelectorAll('.color-links a').forEach(link => {
+      link.addEventListener('click', function (event) {
+        event.preventDefault();
+        const color = event.currentTarget.className;
+        self.emit("setColor", color);
+      });
+    });
   }
   resize(event) {
     event.preventDefault();

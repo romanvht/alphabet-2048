@@ -9,8 +9,9 @@ class GameManager {
     this.inputManager.on("restart", this.restart.bind(this));
     this.inputManager.on("cancel", this.cancel.bind(this));
     this.inputManager.on("resize", this.resize.bind(this));
-    this.inputManager.on('toggleLeaderboard', this.actuator.toggleLeaderboard.bind(this));
-    this.inputManager.on('resizeNickInput', this.actuator.resizeNickInput.bind(this));
+    this.inputManager.on("toggleLeaderboard", this.leaderboard.bind(this));
+    this.inputManager.on("resizeNickInput", this.resizeNick.bind(this));
+    this.inputManager.on("setColor", this.setColor.bind(this));
 
     if (Size) {
       this.size = Size;
@@ -285,6 +286,16 @@ class GameManager {
   }
   positionsEqual(first, second) {
     return first.x === second.x && first.y === second.y;
+  }
+  leaderboard (event) {
+    this.actuator.toggleLeaderboard(event);
+  }
+  resizeNick (event) {
+    this.actuator.resizeNickInput(event);
+  }
+  setColor (str) {
+    this.storageManager.setStyle(str);
+    this.actuator.setColor(str);
   }
 }
 

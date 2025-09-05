@@ -134,11 +134,6 @@ class KeyboardInputManager {
       }
     });
 
-    // Событие для переключения таблицы лидеров
-    document.getElementById('linkTop').addEventListener('click', function (event) {
-      self.emit("toggleLeaderboard", event);
-    });
-
     // Событие для изменения размера инпута ника
     document.getElementById('nick').addEventListener('input', function (event) {
       self.emit("updateNick", event);

@@ -269,11 +269,16 @@ a:hover {
 }
 
 .main_links {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
   font-size: 0;
   margin: 0px;
+  gap: 2px;
 }
 
 .link {
+  flex: 1 1 25%;
   box-sizing: border-box;
   text-align: center;
   font-weight: bold;
@@ -282,8 +287,6 @@ a:hover {
   border-radius: 2px;
   padding: 15px 1px;
   color: white;
-  display: inline-block;
-  width: calc(25% - 15px);
 }
 
 .link svg {
